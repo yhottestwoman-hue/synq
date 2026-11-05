@@ -272,25 +272,35 @@ function videoRow(id,sub){return `<div class="list-row"><img class="thumb" src="
 function renderLibrary(){const el=document.getElementById('libraryList');if(activeLibrary==='queue'){el.innerHTML=queue.length?queue.map(q=>videoRow(q.videoId,'Shared room queue')).join(''):'<div class="empty">Your queue is empty.</div>'}else{el.innerHTML=recent.length?recent.map(id=>videoRow(id,'Recently played')).join(''):'<div class="empty">Nothing played yet.</div>'}}
 function libraryTab(which,btn){activeLibrary=which;document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');renderLibrary()}
 async function searchVideos(inputId='searchInput'){
- const q=document.getElementById(inputId).value.trim();
- if(!q)return toast('Type something to search');
+ const input=document.getElementById(inputId);
  const out=document.getElementById('searchResults');
+ const q=input?.value.trim();
+ if(!q)return toast('Type something to search');
  out.innerHTML='<div class="empty">Searching YouTube…</div>';
  try{
-  const params=new URLSearchParams({path:'search',q,maxResults:'12',type:'video',part:'snippet',order:'relevance'});
-  const response=await fetch(`/api/youtube?${params.toString()}`);
-  const data=await response.json();
-  if(!response.ok)throw new Error(data?.error?.message||'YouTube search failed');
-  out.innerHTML=(data.items||[]).map(v=>{
+  const response=await fetch(`/api/youtube?path=search&q=${encodeURIComponent(q)}`);
+  const raw=await response.text();
+  let data;
+  try{data=JSON.parse(raw)}
+  catch(parseError){
+   const preview=raw.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim().slice(0,180);
+   throw new Error(`YouTube API route returned a non-JSON response (${response.status}): ${preview||'Empty response'}`);
+  }
+  if(!response.ok)throw new Error(data?.error?.message||`YouTube search failed (${response.status})`);
+  const items=Array.isArray(data.items)?data.items:[];
+  out.innerHTML=items.map(v=>{
    const id=v.id?.videoId;
+   if(!id)return '';
    const title=v.snippet?.title||'YouTube video';
    const channel=v.snippet?.channelTitle||'YouTube';
-   const thumb=v.snippet?.thumbnails?.medium?.url||`https://img.youtube.com/vi/${id}/mqdefault.jpg`;
-   if(!id)return '';
+   const thumb=v.snippet?.thumbnails?.medium?.url||v.snippet?.thumbnails?.default?.url||`https://img.youtube.com/vi/${id}/mqdefault.jpg`;
    return `<div class="list-row"><img class="thumb" src="${escAttr(thumb)}" alt=""><div class="meta"><strong>${esc(title)}</strong><small>${esc(channel)}</small></div><button class="btn small" onclick="selectSearchVideo('${escAttr(id)}','${escAttr(title)}')">Add</button></div>`;
-  }).join('')||'<div class="empty">No videos found.</div>';
+  }).join('')||'<div class="empty">No videos found. Try another search.</div>';
   if(inputId==='searchInput')go('library');
- }catch(e){out.innerHTML=`<div class="notice glass">${esc(e.message)}. Check the Vercel YouTube API connection.</div>`}
+ }catch(e){
+  out.innerHTML=`<div class="notice glass">${esc(e.message||'YouTube search failed')}</div>`;
+  if(inputId==='searchInput')go('library');
+ }
 }
 function selectSearchVideo(id,title='YouTube video'){roomRef?.child('queue').push({videoId:id,title,addedBy:displayName,addedAt:Date.now()});playQueued(id);go('watch')}
 function createRoom(type){roomId=Math.random().toString(36).slice(2,9);if(db){roomRef=db.ref('ysefy/rooms/'+roomId);roomRef.update({visibility:type,createdAt:Date.now(),createdBy:displayName});}history.replaceState({},'',location.pathname+'?room='+roomId);document.getElementById('roomDescription').textContent=roomId;document.getElementById('currentRoomLabel').textContent='Room '+roomId;attachRoom();toast(type==='private'?'Private room created':'Public room created');go('watch')}
