@@ -2,439 +2,498 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b0b0d">
-<title>SYNQ — Together, in sync.</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#08080a">
+<title>SYNQ — Listen · Watch · Connect</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap');
 
 :root{
-  --bg:#09090b;
-  --panel:#111114;
-  --panel2:#17171b;
-  --line:#29292f;
-  --white:#f4f4f5;
-  --muted:#85858e;
-  --silver:#c5c5cc;
+--bg:#08080a;--panel:#111115;--panel2:#19191e;
+--line:#303036;--white:#eeeef2;--muted:#898991;
+--glass:rgba(255,255,255,.055);
 }
 *{box-sizing:border-box}
-body{
-  margin:0;background:var(--bg);color:var(--white);
-  font-family:'DM Sans',sans-serif;min-height:100vh;
-}
+body{margin:0;background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh}
 button,input{font:inherit}
-button{cursor:pointer}
+button{cursor:pointer;color:inherit}
 button:focus-visible,input:focus-visible{outline:1px solid #aaa;outline-offset:3px}
-.app{max-width:1400px;margin:auto;min-height:100vh}
-.sidebar{
-  position:fixed;top:0;bottom:0;width:245px;
-  padding:30px 22px;border-right:1px solid var(--line);
-  background:#0c0c0f;display:flex;flex-direction:column;
+#intro{
+min-height:100svh;position:relative;overflow:hidden;
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+background:
+radial-gradient(ellipse at 91% 18%,#55545d 0%,#222127 13%,transparent 27%),
+radial-gradient(ellipse at 8% 100%,#45444d 0%,transparent 23%),
+radial-gradient(ellipse at 95% 100%,#37363e 0%,transparent 25%),
+#050506;
 }
-.brand{font:800 28px 'Manrope';letter-spacing:8px;margin:8px 0 5px 10px}
-.tagline{font-size:10px;letter-spacing:3px;color:var(--muted);margin:0 0 50px 10px}
-.nav-label{font-size:10px;letter-spacing:2px;color:#62626b;margin:22px 10px 10px}
+#intro:before{
+content:"";position:absolute;inset:0;pointer-events:none;
+background:repeating-linear-gradient(0deg,transparent 0 27px,rgba(255,255,255,.018) 28px 29px);
+}
+.star{position:absolute;color:#ddd;font-size:20px;animation:twinkle 3s infinite alternate}
+@keyframes twinkle{from{opacity:.25;transform:scale(.8)}to{opacity:1;transform:scale(1.2)}}
+.moon{
+position:absolute;width:280px;height:280px;border-radius:50%;
+background:radial-gradient(circle at 35% 30%,#777680,#29282f 65%,#111);
+top:9%;right:-100px;opacity:.8;filter:blur(1px)
+}
+.intro-content{z-index:1;text-align:center;padding:25px;width:100%}
+.crown{width:76px;height:55px;margin:auto auto 5px;display:block}
+.intro-logo{
+font-family:'Cormorant Garamond',serif;font-weight:600;
+font-size:clamp(75px,17vw,125px);letter-spacing:10px;
+background:linear-gradient(180deg,#fff,#aaa9b2 65%,#eee);
+-webkit-background-clip:text;background-clip:text;color:transparent;
+text-shadow:0 10px 35px #aaa4;
+}
+.intro-sub{letter-spacing:7px;font-size:12px;color:#c4c4ca;margin-top:12px}
+.wave{height:38px;display:flex;gap:4px;justify-content:center;align-items:center;margin:28px auto 65px}
+.wave i{width:3px;background:#ccc;border-radius:5px;animation:wave .8s infinite alternate}
+.wave i:nth-child(3n){animation-delay:.3s}
+.wave i:nth-child(2n){animation-delay:.5s}
+@keyframes wave{from{height:5px}to{height:32px}}
+.enter{
+width:min(390px,90%);padding:22px;border:1px solid #aaa8;
+border-radius:50px;background:linear-gradient(120deg,#ffffff0a,#ffffff17,#ffffff05);
+box-shadow:0 0 35px #fff2,inset 0 0 20px #fff1;
+letter-spacing:6px;font-size:13px;backdrop-filter:blur(20px);
+transition:.35s;
+}
+.enter:hover{box-shadow:0 0 55px #fff5;transform:translateY(-3px);background:#ffffff19}
+.enter span{margin:0 20px}
+#app{display:none;min-height:100vh;animation:fade .7s}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+header{
+height:75px;display:flex;align-items:center;justify-content:space-between;
+padding:0 5%;border-bottom:1px solid var(--line);
+position:sticky;top:0;background:#09090beF;backdrop-filter:blur(20px);z-index:5;
+}
+.brand{font-family:'Cormorant Garamond',serif;font-size:34px;letter-spacing:5px}
+.header-right{display:flex;align-items:center;gap:10px}
+.icon-btn{background:none;border:1px solid var(--line);border-radius:50%;width:39px;height:39px}
+.layout{display:flex;min-height:calc(100vh - 75px)}
+aside{width:225px;padding:28px 17px;border-right:1px solid var(--line);flex-shrink:0}
+.nav-label{font-size:9px;letter-spacing:3px;color:#777;margin:15px 10px}
 .nav{
-  border:0;background:transparent;color:#9999a2;
-  width:100%;padding:13px 12px;border-radius:9px;
-  text-align:left;display:flex;gap:13px;align-items:center;
-  margin:3px 0;font-size:13px;transition:.2s;
+display:flex;align-items:center;gap:13px;width:100%;padding:14px 13px;
+background:transparent;border:0;border-radius:9px;color:#92929a;
+text-align:left;font-size:12px;margin:3px 0;transition:.25s
 }
-.nav:hover,.nav.active{background:#202024;color:white}
-.nav span:first-child{font-size:17px;width:20px;text-align:center}
-.sidebar-bottom{margin-top:auto;border-top:1px solid var(--line);padding-top:18px}
-.profile{display:flex;align-items:center;gap:12px;padding:8px}
-.avatar{
-  width:36px;height:36px;border-radius:50%;background:#29292e;
-  display:grid;place-items:center;color:white;font-weight:bold;
-}
-.profile small{display:block;color:var(--muted);margin-top:3px}
-.main{margin-left:245px;padding:32px 5%;min-height:100vh}
-.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:45px}
-.breadcrumb{font-size:12px;color:var(--muted);letter-spacing:1px}
-.status{font-size:11px;color:#aaa;border:1px solid var(--line);padding:8px 12px;border-radius:30px}
-.page{display:none;animation:appear .25s ease}
+.nav:hover,.nav.active{background:#ffffff12;color:white}
+.nav .ico{font-size:18px;width:20px;text-align:center}
+main{flex:1;min-width:0;padding:35px 5% 90px;max-width:1200px;margin:auto}
+.page{display:none;animation:pagein .35s ease}
 .page.active{display:block}
-@keyframes appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-h1,h2,h3{font-family:'Manrope',sans-serif}
-h1{font-size:clamp(34px,5vw,57px);letter-spacing:-2.5px;margin:12px 0}
-h2{font-size:23px;letter-spacing:-.7px}
-h3{font-size:15px}
-p{color:var(--muted);font-size:13px;line-height:1.8}
-.kicker{font-size:10px;letter-spacing:3px;color:#85858d;text-transform:uppercase}
+@keyframes pagein{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.kicker{font-size:10px;letter-spacing:4px;color:var(--muted)}
+h1{font-size:clamp(38px,6vw,65px);font-family:'Cormorant Garamond',serif;font-weight:500;margin:12px 0}
+h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:500}
+h3{font-size:14px}
+p{font-size:12px;color:var(--muted);line-height:1.8}
 .hero{
-  min-height:300px;border:1px solid var(--line);border-radius:18px;
-  padding:45px;background:
-  radial-gradient(ellipse at 85% 20%,#303036 0%,transparent 43%),
-  linear-gradient(130deg,#17171b,#0e0e11);
-  display:flex;flex-direction:column;justify-content:center;
+padding:45px;border:1px solid var(--line);border-radius:17px;
+background:radial-gradient(ellipse at 85% 20%,#42414966,transparent 45%),linear-gradient(120deg,#17171b,#0d0d10);
+min-height:260px;display:flex;flex-direction:column;justify-content:center;
 }
-.hero p{max-width:430px}
+.hero h1{font-size:clamp(43px,7vw,75px)}
+.hero p{max-width:420px}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .btn{
-  background:#efeff0;color:#101012;border:0;border-radius:8px;
-  padding:12px 17px;font-size:12px;font-weight:700;
+padding:12px 19px;background:#e8e8eb;color:#111;
+border:1px solid #ddd;border-radius:30px;font-size:11px;font-weight:700;
+transition:.2s
 }
-.btn:hover{background:#cfcfd3}
-.btn.ghost{background:#19191e;color:#ddd;border:1px solid #34343b}
-.btn.ghost:hover{background:#27272d}
-.btn.danger{background:#241719;color:#e5a8ac;border:1px solid #46282d}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin:25px 0}
+.btn:hover{transform:translateY(-2px);background:white}
+.btn.ghost{background:transparent;color:#ddd;border-color:#555}
+.btn.ghost:hover{background:#ffffff12}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}
 .card{
-  border:1px solid var(--line);background:linear-gradient(145deg,#151519,#101013);
-  border-radius:13px;padding:22px;min-width:0;
+padding:22px;border:1px solid var(--line);border-radius:13px;
+background:linear-gradient(140deg,#19191e,#101013);transition:.25s;min-width:0;
 }
-.card:hover{border-color:#48484f}
-.card-icon{font-size:23px;color:#ddd;margin-bottom:17px}
-.card h3{margin:0 0 7px}
+.card:hover{border-color:#777;transform:translateY(-3px)}
+.card-icon{font-size:23px;margin-bottom:15px}
+.card h3{margin:0 0 8px}
 .card p{margin:0}
-.card-action{display:block;width:100%;height:100%;text-align:left;color:inherit;background:none;border:0;padding:0}
-.section-title{display:flex;justify-content:space-between;align-items:center;margin-top:42px}
-.section-title h2{margin:0}
-.panel{border:1px solid var(--line);border-radius:13px;padding:23px;background:#111114;margin-top:17px}
-.field{margin:14px 0}
-.field label{display:block;font-size:11px;color:#aaa;margin-bottom:8px}
+.card button{background:none;border:0;text-align:left;padding:0;width:100%}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-top:35px}
+.section-head h2{margin:0}
+.panel{padding:23px;background:var(--panel);border:1px solid var(--line);border-radius:13px;margin-top:18px}
 input{
-  width:100%;background:#09090c;color:white;border:1px solid #303036;
-  border-radius:8px;padding:13px;font-size:13px;
+background:#09090c;color:white;border:1px solid #36363d;
+border-radius:8px;padding:14px;width:100%;font-size:12px;margin:7px 0;
 }
-input::placeholder{color:#666}
-.row{display:flex;gap:9px;align-items:center}
-.row input{min-width:0}
-.code{
-  font:700 30px 'Manrope';letter-spacing:8px;color:white;
-  padding:20px 0;
-}
-.room-info{font-size:11px;color:#777}
-.video{
-  width:100%;aspect-ratio:16/9;background:#050505;border:1px solid #29292f;
-  border-radius:10px;margin-top:20px;overflow:hidden;display:grid;place-items:center;
-}
+label{display:block;color:#aaa;font-size:10px;letter-spacing:2px;margin-top:12px}
+.row{display:flex;gap:10px;align-items:center}
+.row input{flex:1;min-width:0}
+.empty{text-align:center;padding:35px 10px;color:#777;font-size:12px}
+.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border:0}
+.item strong{font-size:12px}
+.item small{display:block;font-size:10px;color:#888;margin-top:5px;overflow-wrap:anywhere}
+.video{width:100%;aspect-ratio:16/9;background:#050505;border-radius:10px;margin-top:18px;overflow:hidden}
 .video iframe{width:100%;height:100%;border:0}
-.empty{padding:35px 15px;text-align:center;color:#777;font-size:12px}
-.item{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;border-bottom:1px solid #29292f;padding:14px 0;
+.chatbox{height:300px;overflow-y:auto;background:#09090c;border:1px solid var(--line);padding:15px;border-radius:9px}
+.chatmsg{padding:10px 0;border-bottom:1px solid #25252a;font-size:12px}
+.chatmsg p{margin:5px 0}
+.notice{padding:13px;background:#1a1a20;border:1px solid #333;border-radius:8px;color:#999;font-size:11px;line-height:1.7;margin:15px 0}
+.toggle{width:51px;height:28px;background:#393940;border-radius:30px;border:1px solid #666;padding:3px;display:flex;align-items:center;transition:.3s}
+.toggle:after{content:"";width:20px;height:20px;background:white;border-radius:50%;transition:.3s}
+.toggle.on{background:#aaa;box-shadow:0 0 20px #fff5}
+.toggle.on:after{transform:translateX(22px);background:#111}
+.mobile-nav{display:none}
+body.liquid .card,body.liquid .panel,body.liquid .hero{
+background:linear-gradient(135deg,#ffffff15,#ffffff04);
+backdrop-filter:blur(22px);box-shadow:inset 0 1px #ffffff18,0 15px 45px #0005;
 }
-.item:last-child{border-bottom:0}
-.item strong{font-size:13px}
-.item small{display:block;color:#888;font-size:11px;margin-top:4px}
-.text-link{color:#ddd;text-decoration:none;font-size:12px}
-.chatbox{
-  height:300px;overflow-y:auto;background:#09090c;
-  border:1px solid var(--line);border-radius:9px;padding:15px;
+body.liquid header{background:#ffffff0a;backdrop-filter:blur(25px)}
+body.liquid .nav.active{background:#ffffff20;backdrop-filter:blur(15px)}
+footer{color:#555;font-size:9px;letter-spacing:3px;margin-top:60px;padding:20px 0;border-top:1px solid var(--line)}
+@media(max-width:760px){
+aside{display:none}
+main{padding:25px 18px 100px}
+header{height:65px;padding:0 18px}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.card{padding:16px}
+.hero{padding:27px 22px}
+.mobile-nav{
+display:flex;position:fixed;bottom:0;left:0;right:0;z-index:10;
+justify-content:space-around;padding:10px 3px calc(10px + env(safe-area-inset-bottom));
+background:#101014ed;backdrop-filter:blur(22px);border-top:1px solid var(--line)
 }
-.chatmsg{font-size:12px;padding:10px 0;border-bottom:1px solid #222}
-.chatmsg strong{color:#eee}
-.chatmsg p{margin:4px 0}
-.notice{
-  background:#17171b;border:1px solid #303036;border-radius:8px;
-  padding:13px;color:#999;font-size:11px;line-height:1.7;margin:15px 0;
+.mobile-nav button{background:none;border:0;color:#888;font-size:9px;padding:4px}
+.mobile-nav button span{display:block;font-size:19px;margin-bottom:5px}
+.mobile-nav button.active{color:white}
+.intro-logo{letter-spacing:5px}
 }
-footer{border-top:1px solid var(--line);margin-top:65px;padding:22px 0;color:#555;font-size:10px;letter-spacing:2px}
-.mobilebar{display:none}
-@media(max-width:850px){
- .sidebar{width:75px;padding:22px 9px}
- .brand{font-size:18px;letter-spacing:2px;margin:8px 0;text-align:center}
- .tagline,.nav-label,.nav span:last-child,.profile div:last-child{display:none}
- .nav{justify-content:center;padding:14px 5px}
- .nav span:first-child{font-size:20px}
- .profile{justify-content:center;padding:5px}
- .main{margin-left:75px;padding:25px 4%}
-}
-@media(max-width:580px){
- .sidebar{display:none}
- .main{margin:0;padding:20px 17px 95px}
- .topbar{margin-bottom:28px}
- .hero{padding:27px 22px;min-height:280px}
- .grid{grid-template-columns:1fr 1fr;gap:10px}
- .card{padding:16px}
- .mobilebar{
-  display:flex;position:fixed;bottom:0;left:0;right:0;z-index:10;
-  background:#111114;border-top:1px solid #303036;
-  justify-content:space-around;padding:10px 4px calc(10px + env(safe-area-inset-bottom));
- }
- .mobilebar button{background:none;border:0;color:#888;font-size:10px;padding:5px}
- .mobilebar button span{display:block;font-size:19px;margin-bottom:4px}
- .mobilebar button.active{color:white}
- .code{font-size:25px}
- .row{flex-wrap:wrap}
- .row input{flex:1 1 100%}
-}
+@media(max-width:380px){.grid{grid-template-columns:1fr 1fr}.intro-sub{letter-spacing:4px;font-size:10px}}
 </style>
 </head>
 <body>
-<div class="app">
 
-<aside class="sidebar">
-  <div class="brand">SYNQ</div>
-  <div class="tagline">TOGETHER, IN SYNC.</div>
+<section id="intro">
+<div class="moon"></div>
+<span class="star" style="top:20%;left:13%">✦</span>
+<span class="star" style="top:23%;left:53%;animation-delay:1s">✦</span>
+<span class="star" style="top:38%;right:9%;animation-delay:.5s">✧</span>
+<span class="star" style="top:48%;left:22%">✦</span>
+<span class="star" style="bottom:25%;right:17%;animation-delay:1s">✦</span>
+<span class="star" style="bottom:8%;left:40%">✧</span>
+<div class="intro-content">
+<svg class="crown" viewBox="0 0 100 65" fill="none" stroke="#c9c9d0" stroke-width="3">
+<path d="M10 51L20 8L38 34L50 5L64 34L82 8L90 51Z"/>
+<path d="M12 55H88"/>
+</svg>
+<div class="intro-logo">SYNQ</div>
+<div class="intro-sub">LISTEN　✦　WATCH　✦　CONNECT</div>
+<div class="wave">
+<i style="height:8px"></i><i style="height:13px"></i><i style="height:19px"></i><i style="height:9px"></i><i style="height:27px"></i><i style="height:35px"></i><i style="height:18px"></i><i style="height:29px"></i><i style="height:12px"></i><i style="height:6px"></i><i style="height:14px"></i>
+</div>
+<button class="enter" onclick="enterApp()">✦ <span>TAP TO ENTER</span> »</button>
+</div>
+</section>
 
-  <div class="nav-label">WORKSPACE</div>
-  <button class="nav active" data-page="home"><span>⌂</span><span>Overview</span></button>
-  <button class="nav" data-page="rooms"><span>◈</span><span>My rooms</span></button>
-  <button class="nav" data-page="watch"><span>▷</span><span>Watch together</span></button>
-  <button class="nav" data-page="listen"><span>♫</span><span>Listen together</span></button>
+<div id="app">
+<header>
+<div class="brand">SYNQ</div>
+<div class="header-right">
+<button class="icon-btn" onclick="focusSearch()" aria-label="Search">⌕</button>
+<button class="icon-btn" onclick="navigate('settings')" aria-label="Settings">⚙</button>
+</div>
+</header>
 
-  <div class="nav-label">PERSONAL</div>
-  <button class="nav" data-page="messages"><span>✉</span><span>Messages</span></button>
-  <button class="nav" data-page="settings"><span>⚙</span><span>Settings</span></button>
-
-  <div class="sidebar-bottom">
-    <div class="profile">
-      <div class="avatar" id="avatar">S</div>
-      <div><strong id="profileName" style="font-size:12px">Guest</strong><small>Personal space</small></div>
-    </div>
-  </div>
+<div class="layout">
+<aside>
+<div class="nav-label">WORKSPACE</div>
+<button class="nav active" data-page="home"><span class="ico">⌂</span>Home</button>
+<button class="nav" data-page="rooms"><span class="ico">◈</span>Rooms</button>
+<button class="nav" data-page="watch"><span class="ico">▷</span>Watch together</button>
+<button class="nav" data-page="listen"><span class="ico">♫</span>Music library</button>
+<div class="nav-label">PERSONAL</div>
+<button class="nav" data-page="messages"><span class="ico">✉</span>Messages</button>
+<button class="nav" data-page="settings"><span class="ico">⚙</span>Settings</button>
 </aside>
 
-<main class="main">
-  <div class="topbar">
-    <div class="breadcrumb">SYNQ <span style="color:#444">/</span> <span id="crumb">OVERVIEW</span></div>
-    <div class="status">✦ PERSONAL SPACE</div>
-  </div>
+<main>
+<section class="page active" id="home">
+<div class="kicker">YOUR PRIVATE UNIVERSE</div>
+<div class="hero">
+<div class="kicker">WELCOME TO SYNQ</div>
+<h1>Closer, even<br>when apart.</h1>
+<p>A space to listen, watch and connect with your favourite people.</p>
+<div class="actions">
+<button class="btn" onclick="navigate('rooms')">Create a room ↗</button>
+<button class="btn ghost" onclick="navigate('watch')">Watch something</button>
+</div>
+</div>
+<div class="section-head"><h2>Explore</h2><span class="kicker">YOUR SPACE</span></div>
+<div class="grid">
+<div class="card"><button onclick="navigate('rooms')"><div class="card-icon">◈</div><h3>Private rooms</h3><p>Create a place to hang out.</p></button></div>
+<div class="card"><button onclick="navigate('watch')"><div class="card-icon">▷</div><h3>Watch together</h3><p>Bring videos into your space.</p></button></div>
+<div class="card"><button onclick="navigate('listen')"><div class="card-icon">♫</div><h3>Music library</h3><p>Keep your favourite playlists.</p></button></div>
+<div class="card"><button onclick="navigate('messages')"><div class="card-icon">✉</div><h3>Messages</h3><p>Your personal chat space.</p></button></div>
+</div>
+</section>
 
-  <section class="page active" id="home">
-    <div class="hero">
-      <div class="kicker">A LITTLE CLOSER, EVERYWHERE</div>
-      <h1>Good evening<span id="greetingName"></span>.</h1>
-      <p>Your own little corner of the internet. Watch something, share music, or spend time together.</p>
-      <div class="actions">
-        <button class="btn" onclick="navigate('rooms')">Create a room ↗</button>
-        <button class="btn ghost" onclick="navigate('watch')">Start watching</button>
-      </div>
-    </div>
+<section class="page" id="rooms">
+<div class="kicker">SYNQ / ROOMS</div><h1>Your rooms.</h1>
+<p>Create a room or enter a room code.</p>
+<div class="grid">
+<div class="card"><div class="card-icon">＋</div><h3>Create room</h3><p>Generate a unique room code.</p><button class="btn" style="margin-top:17px" onclick="createRoom()">Create ↗</button></div>
+<div class="card"><div class="card-icon">⌘</div><h3>Join room</h3><p>Enter your friend's code.</p><input id="joinCode" placeholder="Room code"><button class="btn ghost" onclick="joinRoom()">Join ↗</button></div>
+</div>
+<div id="roomResult"></div>
+<div class="section-head"><h2>Recent rooms</h2></div>
+<div class="panel" id="roomList"></div>
+</section>
 
-    <div class="section-title"><h2>Your workspace</h2><span class="kicker">EXPLORE</span></div>
-    <div class="grid">
-      <div class="card"><button class="card-action" onclick="navigate('rooms')"><div class="card-icon">◈</div><h3>Private rooms</h3><p>Create a space and invite your people.</p></button></div>
-      <div class="card"><button class="card-action" onclick="navigate('watch')"><div class="card-icon">▷</div><h3>Watch together</h3><p>Bring your favourite videos into one place.</p></button></div>
-      <div class="card"><button class="card-action" onclick="navigate('listen')"><div class="card-icon">♫</div><h3>Music library</h3><p>Keep your playlists close.</p></button></div>
-      <div class="card"><button class="card-action" onclick="navigate('messages')"><div class="card-icon">✉</div><h3>Messages</h3><p>Your conversation space.</p></button></div>
-      <div class="card"><button class="card-action" onclick="navigate('settings')"><div class="card-icon">⚙</div><h3>Preferences</h3><p>Make SYNQ feel like yours.</p></button></div>
-    </div>
-  </section>
+<section class="page" id="watch">
+<div class="kicker">SYNQ / WATCH</div><h1>Watch together.</h1>
+<p>Paste a YouTube video link to open your player.</p>
+<div class="panel">
+<label>VIDEO URL</label><input id="videoUrl" placeholder="Paste YouTube URL">
+<button class="btn" onclick="loadVideo()">Play video ↗</button>
+<div class="video" id="videoPlayer"><div class="empty">Your player is waiting.</div></div>
+</div>
+</section>
 
-  <section class="page" id="rooms">
-    <div class="kicker">YOUR PRIVATE SPACE</div>
-    <h1>Rooms.</h1>
-    <p>Make a room for a movie night, music session or just hanging out.</p>
+<section class="page" id="listen">
+<div class="kicker">SYNQ / MUSIC</div><h1>Your soundtrack.</h1>
+<p>Collect your playlists in one place.</p>
+<div class="panel">
+<label>PLAYLIST NAME</label><input id="playlistName" placeholder="Late night favourites">
+<label>PLAYLIST LINK</label><input id="playlistUrl" placeholder="Spotify or YouTube playlist URL">
+<button class="btn" onclick="addPlaylist()">Add playlist +</button>
+</div>
+<div class="section-head"><h2>Your library</h2></div>
+<div class="panel" id="playlistList"></div>
+</section>
 
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr))">
-      <div class="card">
-        <div class="card-icon">＋</div>
-        <h3>Create a room</h3>
-        <p>Generate a room code to share.</p>
-        <button class="btn" style="margin-top:18px" onclick="createRoom()">Create room</button>
-      </div>
-      <div class="card">
-        <div class="card-icon">⌘</div>
-        <h3>Join a room</h3>
-        <p>Enter a room code from a friend.</p>
-        <div class="field"><input id="joinCode" placeholder="Enter room code"></div>
-        <button class="btn ghost" onclick="joinRoom()">Join room ↗</button>
-      </div>
-    </div>
+<section class="page" id="messages">
+<div class="kicker">SYNQ / MESSAGES</div><h1>Conversations.</h1>
+<div class="panel">
+<div class="chatbox" id="chatbox"></div>
+<div class="row" style="margin-top:12px"><input id="chatInput" placeholder="Write a message..." onkeydown="if(event.key==='Enter')sendMessage()"><button class="btn" onclick="sendMessage()">Send ↗</button></div>
+<div class="notice">Local chat preview. Real private messaging between different users requires a connected backend.</div>
+</div>
+</section>
 
-    <div id="roomResult"></div>
-    <div class="section-title"><h2>My rooms</h2></div>
-    <div class="panel" id="roomList"><div class="empty">No rooms created yet.</div></div>
-  </section>
+<section class="page" id="settings">
+<div class="kicker">SYNQ / SETTINGS</div><h1>Preferences.</h1>
+<div class="panel">
+<h3>Liquid glass interface</h3>
+<p>Switch between the original matte look and liquid glass.</p>
+<div class="row" style="justify-content:space-between;margin-top:18px">
+<span style="font-size:12px">Liquid mode</span>
+<button class="toggle" id="liquidToggle" onclick="toggleLiquid()" aria-label="Toggle liquid mode"></button>
+</div>
+</div>
+<div class="panel">
+<h3>Your profile</h3><label>DISPLAY NAME</label>
+<input id="displayName" placeholder="Your name">
+<button class="btn" onclick="saveProfile()">Save changes</button>
+<p id="profileStatus"></p>
+</div>
+<div class="panel">
+<h3>About SYNQ</h3><p>Listen. Watch. Connect. A little universe of your own.</p>
+</div>
+</section>
 
-  <section class="page" id="watch">
-    <div class="kicker">WATCH TOGETHER</div>
-    <h1>Movie night.</h1>
-    <p>Paste a YouTube link and open it in your player.</p>
-    <div class="panel">
-      <div class="field"><label>YOUTUBE VIDEO URL</label><input id="videoUrl" placeholder="https://www.youtube.com/watch?v=..."></div>
-      <button class="btn" onclick="loadVideo()">Load video ↗</button>
-      <div class="video" id="videoPlayer"><div class="empty">Your video will appear here.</div></div>
-      <div class="notice">Playback is controlled locally in this version. Shared playback controls require a connected real-time service.</div>
-    </div>
-  </section>
-
-  <section class="page" id="listen">
-    <div class="kicker">LISTEN TOGETHER</div>
-    <h1>Soundtrack.</h1>
-    <p>Your favourite playlists, collected in one place.</p>
-    <div class="panel">
-      <div class="field"><label>PLAYLIST NAME</label><input id="playlistName" placeholder="Late night favourites"></div>
-      <div class="field"><label>PLAYLIST URL</label><input id="playlistUrl" placeholder="Spotify, YouTube or SoundCloud link"></div>
-      <button class="btn" onclick="addPlaylist()">Add to library +</button>
-    </div>
-    <div class="section-title"><h2>Your library</h2></div>
-    <div class="panel" id="playlistList"><div class="empty">Your library is waiting for its first playlist.</div></div>
-  </section>
-
-  <section class="page" id="messages">
-    <div class="kicker">YOUR PERSONAL SPACE</div>
-    <h1>Messages.</h1>
-    <p>A local chat interface preview.</p>
-    <div class="panel">
-      <div class="chatbox" id="chatbox"><div class="empty">No messages yet. Say hello.</div></div>
-      <div class="row" style="margin-top:12px">
-        <input id="chatInput" placeholder="Write a message..." onkeydown="if(event.key==='Enter')sendMessage()">
-        <button class="btn" onclick="sendMessage()">Send ↗</button>
-      </div>
-      <div class="notice">Messages in this starter are saved only in this browser. Real private DMs need authenticated accounts and a secure database.</div>
-    </div>
-  </section>
-
-  <section class="page" id="settings">
-    <div class="kicker">MAKE IT YOURS</div>
-    <h1>Settings.</h1>
-    <div class="panel">
-      <h3>Profile</h3>
-      <p>Choose how people see your display name.</p>
-      <div class="field"><label>DISPLAY NAME</label><input id="displayName" placeholder="Your name"></div>
-      <button class="btn" onclick="saveProfile()">Save changes</button>
-      <p id="saveStatus"></p>
-    </div>
-    <div class="panel">
-      <h3>Appearance</h3>
-      <p>Midnight monochrome · Minimal interface · Liquid-inspired details.</p>
-    </div>
-    <div class="panel">
-      <h3>Local data</h3>
-      <p>Your current demo rooms, playlists and messages are stored in this browser.</p>
-      <button class="btn danger" onclick="clearData()">Clear local data</button>
-    </div>
-  </section>
-
-  <footer>SYNQ · LISTEN. WATCH. CONNECT.</footer>
+<div class="panel" id="searchResults" style="display:none">
+<h3>Search results</h3><div id="results"></div>
+</div>
+<footer>SYNQ © 2026 · LISTEN · WATCH · CONNECT</footer>
 </main>
+</div>
 
-<nav class="mobilebar">
-  <button class="active" data-page="home"><span>⌂</span>Home</button>
-  <button data-page="rooms"><span>◈</span>Rooms</button>
-  <button data-page="watch"><span>▷</span>Watch</button>
-  <button data-page="listen"><span>♫</span>Music</button>
-  <button data-page="messages"><span>✉</span>Chat</button>
-  <button data-page="settings"><span>⚙</span>Settings</button>
+<nav class="mobile-nav">
+<button class="active" data-page="home"><span>⌂</span>Home</button>
+<button data-page="rooms"><span>◈</span>Rooms</button>
+<button data-page="watch"><span>▷</span>Watch</button>
+<button data-page="listen"><span>♫</span>Music</button>
+<button data-page="messages"><span>✉</span>DM</button>
+<button data-page="settings"><span>⚙</span>More</button>
 </nav>
 </div>
 
 <script>
 const $=id=>document.getElementById(id);
-const get=(key, fallback)=>{try{return JSON.parse(localStorage.getItem('synq_'+key))??fallback}catch{return fallback}};
-const put=(key,value)=>localStorage.setItem('synq_'+key,JSON.stringify(value));
+const read=(key,def)=>{try{return JSON.parse(localStorage.getItem('synq_'+key))??def}catch{return def}};
+const save=(key,val)=>localStorage.setItem('synq_'+key,JSON.stringify(val));
 
-let rooms=get('rooms',[]);
-let playlists=get('playlists',[]);
-let messages=get('messages',[]);
-let profile=get('profile','Guest');
+let rooms=read('rooms',[]);
+let playlists=read('playlists',[]);
+let messages=read('messages',[]);
+let username=read('username','Guest');
+let liquid=read('liquid',false);
+
+function enterApp(){
+ $('intro').style.transition='opacity .6s,transform .6s';
+ $('intro').style.opacity='0';
+ $('intro').style.transform='scale(1.03)';
+ setTimeout(()=>{
+  $('intro').style.display='none';
+  $('app').style.display='block';
+  navigate('home');
+ },550);
+}
 
 function navigate(page){
+ const target=$(page);
+ if(!target)return;
  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- $(page).classList.add('active');
+ target.classList.add('active');
  document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
- $('crumb').textContent=page.toUpperCase();
+ $('searchResults').style.display='none';
  window.scrollTo({top:0,behavior:'smooth'});
+ history.replaceState(null,'','#'+page);
 }
-document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.page)));
 
-function updateProfile(){
- $('profileName').textContent=profile;
- $('avatar').textContent=(profile[0]||'G').toUpperCase();
- $('greetingName').textContent=profile==='Guest'?'':', '+profile;
- $('displayName').value=profile==='Guest'?'':profile;
+document.querySelectorAll('[data-page]').forEach(b=>{
+ b.addEventListener('click',()=>navigate(b.dataset.page));
+});
+
+function toggleLiquid(){
+ liquid=!liquid;
+ document.body.classList.toggle('liquid',liquid);
+ $('liquidToggle').classList.toggle('on',liquid);
+ save('liquid',liquid);
 }
-function saveProfile(){
- const name=$('displayName').value.trim();
- if(!name){$('saveStatus').textContent='Please enter a display name.';return}
- profile=name;put('profile',profile);updateProfile();
- $('saveStatus').textContent='Your profile has been saved.';
+if(liquid){
+ document.body.classList.add('liquid');
+ $('liquidToggle').classList.add('on');
 }
+
+function focusSearch(){
+ let old=$('searchBox');
+ if(old){old.focus();return}
+ const input=document.createElement('input');
+ input.id='searchBox';
+ input.placeholder='Search rooms, playlists and pages...';
+ input.style.cssText='position:fixed;z-index:20;top:80px;left:5%;width:90%;background:#17171b;box-shadow:0 10px 40px #000;padding:17px';
+ document.body.append(input);
+ input.focus();
+ input.addEventListener('input',()=>search(input.value));
+ input.addEventListener('keydown',e=>{if(e.key==='Escape'){input.remove();$('searchResults').style.display='none'}});
+}
+function search(q){
+ const results=$('results');
+ results.replaceChildren();
+ $('searchResults').style.display='block';
+ if(!q.trim()){$('searchResults').style.display='none';return}
+ let entries=[
+ ...['Home','Rooms','Watch together','Music library','Messages','Settings'].map((v,i)=>({name:v,type:'Page',action:()=>navigate(['home','rooms','watch','listen','messages','settings'][i])})),
+ ...playlists.map(v=>({name:v.name,type:'Playlist',url:v.url})),
+ ...rooms.map(v=>({name:v.code,type:'Room'}))
+ ];
+ let found=entries.filter(v=>v.name.toLowerCase().includes(q.toLowerCase()));
+ if(!found.length){results.textContent='No results found.';return}
+ found.forEach(v=>{
+  const item=document.createElement('div');item.className='item';
+  const text=document.createElement('strong');text.textContent=v.name;
+  const type=document.createElement('small');type.textContent=v.type;
+  const open=document.createElement('button');open.className='btn ghost';open.textContent='Open';
+  open.onclick=()=>{if(v.action)v.action();else if(v.url)window.open(v.url,'_blank','noopener');else navigate('rooms')};
+  item.append(text,type,open);results.append(item);
+ });
+}
+
 function createRoom(){
  const code=Math.random().toString(36).slice(2,8).toUpperCase();
- const room={code,created:new Date().toLocaleString()};
- rooms.unshift(room);put('rooms',rooms);
- renderRooms();
- $('roomResult').innerHTML='';
- const box=document.createElement('div');
- box.className='panel';
- const title=document.createElement('div');
- title.className='kicker';title.textContent='ROOM CREATED';
- const codeEl=document.createElement('div');
- codeEl.className='code';codeEl.textContent=code;
- const desc=document.createElement('p');
- desc.textContent='Your local room code is ready. Copy it to share.';
- const copy=document.createElement('button');
- copy.className='btn';copy.textContent='Copy code';
- copy.onclick=()=>navigator.clipboard?.writeText(code).then(()=>copy.textContent='Copied ✓').catch(()=>{copy.textContent=code});
- box.append(title,codeEl,desc,copy);
- $('roomResult').append(box);
+ rooms.unshift({code,date:new Date().toLocaleString()});
+ save('rooms',rooms);renderRooms();
+ const box=$('roomResult');box.replaceChildren();
+ const panel=document.createElement('div');panel.className='panel';
+ const title=document.createElement('div');title.className='kicker';title.textContent='YOUR ROOM CODE';
+ const value=document.createElement('div');value.className='code';value.textContent=code;
+ const copy=document.createElement('button');copy.className='btn';copy.textContent='Copy code';
+ copy.onclick=()=>{navigator.clipboard?.writeText(code).then(()=>copy.textContent='Copied ✓').catch(()=>copy.textContent=code)};
+ panel.append(title,value,copy);box.append(panel);
 }
 function joinRoom(){
  const code=$('joinCode').value.trim().toUpperCase();
  if(!code){alert('Enter a room code first.');return}
- const exists=rooms.some(r=>r.code===code);
- if(exists)alert('This room exists in your local browser. Shared access requires the online backend.');
- else alert('Room not found in this browser. Connect the online backend to join rooms created by other users.');
+ if(rooms.some(r=>r.code===code))alert('This room is saved in this browser. Shared rooms need an online backend.');
+ else alert('Room not found in this browser. Online room sharing requires a backend connection.');
 }
 function renderRooms(){
  const list=$('roomList');list.replaceChildren();
- if(!rooms.length){list.innerHTML='<div class="empty">No rooms created yet.</div>';return}
- rooms.forEach(room=>{
+ if(!rooms.length){list.innerHTML='<div class="empty">No rooms yet.</div>';return}
+ rooms.forEach(r=>{
   const item=document.createElement('div');item.className='item';
   const info=document.createElement('div');
-  const strong=document.createElement('strong');strong.textContent=room.code;
-  const small=document.createElement('small');small.textContent='Created '+room.created;
+  const strong=document.createElement('strong');strong.textContent=r.code;
+  const small=document.createElement('small');small.textContent=r.date;
   info.append(strong,small);
-  const copy=document.createElement('button');copy.className='btn ghost';copy.textContent='Copy code';
-  copy.onclick=()=>navigator.clipboard?.writeText(room.code).then(()=>copy.textContent='Copied ✓');
+  const copy=document.createElement('button');copy.className='btn ghost';copy.textContent='Copy';
+  copy.onclick=()=>navigator.clipboard?.writeText(r.code).then(()=>copy.textContent='Copied');
   item.append(info,copy);list.append(item);
  });
 }
 function loadVideo(){
- let value=$('videoUrl').value.trim(),id='';
+ let id='';
  try{
-  const url=new URL(value);
+  const url=new URL($('videoUrl').value.trim());
   if(url.hostname==='youtu.be')id=url.pathname.slice(1);
   else if(url.hostname.includes('youtube.com'))id=url.searchParams.get('v')||url.pathname.split('/').pop();
  }catch{}
- if(!/^[a-zA-Z0-9_-]{11}$/.test(id)){alert('Please enter a valid YouTube video URL.');return}
+ if(!/^[\w-]{11}$/.test(id)){alert('Enter a valid YouTube video URL.');return}
  const frame=document.createElement('iframe');
- frame.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id);
- frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+ frame.src='https://www.youtube-nocookie.com/embed/'+id;
+ frame.allow='autoplay; encrypted-media; picture-in-picture';
  frame.allowFullscreen=true;
  $('videoPlayer').replaceChildren(frame);
 }
 function addPlaylist(){
- const name=$('playlistName').value.trim();
- const url=$('playlistUrl').value.trim();
- if(!name||!url){alert('Enter a playlist name and URL.');return}
- try{const parsed=new URL(url);if(!['http:','https:'].includes(parsed.protocol))throw Error()}
- catch{alert('Please enter a valid playlist URL.');return}
- playlists.unshift({name,url});
- put('playlists',playlists);
+ const name=$('playlistName').value.trim(),url=$('playlistUrl').value.trim();
+ if(!name||!url){alert('Enter a name and playlist link.');return}
+ try{const u=new URL(url);if(!['http:','https:'].includes(u.protocol))throw 0}catch{alert('Enter a valid link.');return}
+ playlists.unshift({name,url});save('playlists',playlists);
  $('playlistName').value='';$('playlistUrl').value='';
  renderPlaylists();
 }
 function renderPlaylists(){
  const list=$('playlistList');list.replaceChildren();
- if(!playlists.length){list.innerHTML='<div class="empty">Your library is waiting for its first playlist.</div>';return}
+ if(!playlists.length){list.innerHTML='<div class="empty">No playlists yet.</div>';return}
  playlists.forEach((p,i)=>{
   const item=document.createElement('div');item.className='item';
   const info=document.createElement('div');
-  const strong=document.createElement('strong');strong.textContent=p.name;
-  const small=document.createElement('small');small.textContent=p.url;
-  info.append(strong,small);
+  const name=document.createElement('strong');name.textContent=p.name;
+  const url=document.createElement('small');url.textContent=p.url;
+  info.append(name,url);
   const actions=document.createElement('div');
-  const open=document.createElement('a');open.className='text-link';open.href=p.url;open.target='_blank';open.rel='noopener';open.textContent='Open ↗';
+  const open=document.createElement('button');open.className='btn ghost';open.textContent='Open ↗';
+  open.onclick=()=>window.open(p.url,'_blank','noopener');
   const del=document.createElement('button');del.className='btn ghost';del.textContent='×';
-  del.onclick=()=>{playlists.splice(i,1);put('playlists',playlists);renderPlaylists()};
+  del.onclick=()=>{playlists.splice(i,1);save('playlists',playlists);renderPlaylists()};
   actions.append(open,del);item.append(info,actions);list.append(item);
  });
 }
 function sendMessage(){
- const text=$('chatInput').value.trim();
- if(!text)return;
- messages.push({name:profile,text,time:new Date().toLocaleTimeString()});
- put('messages',messages);$('chatInput').value='';renderMessages();
+ const text=$('chatInput').value.trim();if(!text)return;
+ messages.push({name:username,text,time:new Date().toLocaleTimeString()});
+ save('messages',messages);$('chatInput').value='';renderMessages();
 }
 function renderMessages(){
  const box=$('chatbox');box.replaceChildren();
  if(!messages.length){box.innerHTML='<div class="empty">No messages yet. Say hello.</div>';return}
  messages.forEach(m=>{
-  const div=document.createElement('div
+  const div=document.createElement('div');div.className='chatmsg';
+  const name=document.createElement('strong');name.textContent=m.name+' · '+m.time;
+  const text=document.createElement('p');text.textContent=m.text;
+  div.append(name,text);box.append(div);
+ });
+ box.scrollTop=box.scrollHeight;
+}
+function saveProfile(){
+ const name=$('displayName').value.trim();
+ if(!name){$('profileStatus').textContent='Please enter a name.';return}
+ username=name;save('username',username);
+ $('profileStatus').textContent='Profile saved ✓';
+}
+$('displayName').value=username==='Guest'?'':username;
+renderRooms();renderPlaylists();renderMessages();
+</script>
+</body>
+</html>
