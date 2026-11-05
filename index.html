@@ -8,380 +8,132 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{color-scheme:dark;--gold:#e9ebf0;--ink:#050507;--mut:rgba(255,255,255,.55)}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+*{margin:0;padding:0;box-sizing:border-box}
 html{padding-top:env(safe-area-inset-top,0px)}
-body{font-family:Inter,-apple-system,sans-serif;background:var(--ink);color:#fff;min-height:100vh;overflow-x:hidden;padding-bottom:110px}
-.bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(900px 700px at 15% 0%,rgba(255,255,255,.12),transparent),radial-gradient(800px 600px at 95% 70%,rgba(190,195,205,.10),transparent),radial-gradient(700px 600px at 30% 100%,rgba(255,255,255,.07),transparent),var(--ink)}
+body{font-family:Inter,sans-serif;background:var(--ink);color:#fff;min-height:100vh;overflow-x:hidden;padding-bottom:110px}
+.bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(900px 700px at 15% 0%,rgba(255,255,255,.12),transparent),var(--ink)}
 .wrap{max-width:480px;margin:0 auto;padding:18px 18px 0}
-.serif{font-family:'Cormorant Garamond',Georgia,serif}
-.glass{backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.16);border-radius:22px;box-shadow:0 18px 50px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.22);transition:.3s}
-body.classic .glass{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(255,255,255,.07);box-shadow:none;border-color:rgba(255,255,255,.08)}
+.serif{font-family:'Cormorant Garamond',serif}
+.glass{backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.16);border-radius:22px}
 .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
-.brand{font-size:30px;font-weight:600;letter-spacing:.5px}.brand i{color:var(--gold)}
-.mode{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;padding:8px 13px;border-radius:99px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;cursor:pointer}
-h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:38px;line-height:1.02;letter-spacing:-.5px}
+.brand{font-size:30px;font-weight:600}
+.mode{font-size:11px;padding:8px 13px;border-radius:99px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff}
+h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:38px;line-height:1.02}
 h1 em{color:var(--gold)}
 .sub{color:var(--mut);font-size:14px;line-height:1.55;margin:10px 0 20px}
-h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:23px;font-weight:600;margin:26px 0 12px;display:flex;justify-content:space-between;align-items:baseline}
-h2 small{font-family:Inter;font-size:12px;color:var(--gold);font-weight:500}
-.view{display:none}.view.on{display:block;animation:in .35s}
-@keyframes in{from{opacity:0;transform:translateY(8px)}}
-.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
-.chip{flex:none;padding:9px 16px;border-radius:99px;font-size:13px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);cursor:pointer;color:var(--mut)}
-.chip.on{background:var(--gold);color:#17130a;border-color:var(--gold);font-weight:600}
-.hs{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;margin:0 -18px;padding:0 18px 6px}
+h2{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:600;margin:26px 0 12px;display:flex;justify-content:space-between}
+.view{display:none}.view.on{display:block}
+.chips{display:flex;gap:8px;overflow-x:auto}
+.chip{flex:none;padding:9px 16px;border-radius:99px;font-size:13px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:var(--mut)}
+.chip.on{background:var(--gold);color:#17130a;font-weight:600}
+.hs{display:flex;gap:12px;overflow-x:auto;margin:0 -18px;padding:0 18px 6px}
 .live{flex:none;width:210px;padding:12px;cursor:pointer}
-.th{border-radius:14px;aspect-ratio:16/9;position:relative;display:grid;place-items:center;font-size:20px;overflow:hidden}
-.th b{position:absolute;left:8px;bottom:8px;font-size:10px;font-weight:600;letter-spacing:.8px;background:rgba(0,0,0,.5);padding:3px 8px;border-radius:99px}
+.th{border-radius:14px;aspect-ratio:16/9;position:relative;display:grid;place-items:center;font-size:20px;overflow:hidden;background:linear-gradient(135deg,#8b8f99,#15161a)}
 .live h4,.row h4{font-size:14px;font-weight:600;margin:10px 0 3px}
 .live p,.row p{font-size:12px;color:var(--mut)}
 .row{display:flex;gap:14px;padding:12px;margin-bottom:12px;align-items:center;cursor:pointer}
-.row .th{width:112px;flex:none;border-radius:12px}.row h4{margin:0 0 4px}
+.row .th{width:112px;flex:none;border-radius:12px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.tile{padding:10px;cursor:pointer}.tile h4{font-size:13px;font-weight:600;margin:9px 0 2px}.tile p{font-size:11px;color:var(--mut)}
+.tile{padding:10px;cursor:pointer}
 .seg{display:flex;padding:5px;border-radius:16px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);margin-bottom:16px}
 .seg div{flex:1;text-align:center;padding:10px;border-radius:12px;font-size:13px;font-weight:600;color:var(--mut);cursor:pointer}
 .seg .on{background:rgba(255,255,255,.14);color:#fff}
 .btn{width:100%;padding:16px;border-radius:16px;border:0;background:var(--gold);color:#17130a;font-weight:600;font-size:15px;cursor:pointer;margin-bottom:14px}
 .btn.ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.15)}
-.lock{font-size:11px;color:var(--gold)}
-.cover{width:56px;height:56px;border-radius:14px;flex:none}
-.stage{padding:12px;margin-bottom:14px}
-.stage .th{aspect-ratio:16/10;font-size:44px}
-.bar{height:4px;border-radius:9px;background:rgba(255,255,255,.15);margin:14px 0 6px;overflow:hidden}.bar i{display:block;height:100%;width:38%;background:var(--gold);border-radius:9px}
-.ctl{display:flex;justify-content:center;gap:26px;align-items:center;font-size:22px;margin-top:8px}
-.ctl button{background:none;border:0;color:#fff;font-size:22px;cursor:pointer}
-.ctl .pp{width:54px;height:54px;border-radius:50%;background:var(--gold);color:#17130a;font-size:20px}
-.sync{display:inline-flex;gap:8px;align-items:center;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--mut)}
-.dot{width:7px;height:7px;border-radius:50%;background:#4dffa6;box-shadow:0 0 10px #4dffa6}
-.av{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;font-size:12px;font-weight:600;color:#17130a;margin-right:-8px;border:2px solid var(--ink)}
-.chat{padding:16px;margin-bottom:14px}.chat p{font-size:13px;margin-bottom:9px;line-height:1.4}.chat p b{color:var(--gold);font-weight:600}
-.chat input{width:100%;margin-top:6px;padding:13px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.3);color:#fff;font:inherit;font-size:14px}
-.react{display:flex;gap:10px;margin-top:10px}.react span{padding:8px 12px;border-radius:99px;background:rgba(255,255,255,.08);cursor:pointer;font-size:16px}
-.prof{padding:22px;text-align:center;margin-bottom:6px}
-.pic{width:84px;height:84px;border-radius:50%;margin:0 auto 12px;background:linear-gradient(135deg,#f2f3f6,#5c606a);display:grid;place-items:center;font-size:32px;color:#17130a}
-.stats{display:flex;justify-content:space-around;margin-top:16px;font-size:12px;color:var(--mut)}.stats b{display:block;font-size:20px;color:#fff;font-family:'Cormorant Garamond',serif}
-.set{padding:6px 18px;margin-bottom:12px}
-.set .r{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px}
-.set .r:last-child{border:0}.set .r small{display:block;color:var(--mut);font-size:12px;margin-top:3px;line-height:1.4}
-.sw{flex:none;width:46px;height:28px;border-radius:99px;background:rgba(255,255,255,.18);position:relative;cursor:pointer;transition:.25s}
-.sw::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.25s}
-.sw.on{background:var(--gold)}.sw.on::after{left:21px;background:#17130a}
-.dock{position:fixed;left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));max-width:452px;margin:0 auto;display:flex;padding:8px;border-radius:26px;z-index:20}
-.dock button{flex:1;background:none;border:0;color:var(--mut);padding:9px 0;border-radius:18px;font:500 11px Inter;display:grid;gap:3px;cursor:pointer}
-.dock button span{font-size:19px}.dock .on{background:rgba(255,255,255,.12);color:var(--gold)}
-.sheet{position:fixed;inset:0;z-index:30;display:none;align-items:flex-end;background:rgba(0,0,0,.5)}.sheet.on{display:flex}
-.sheet .glass{width:100%;max-width:480px;margin:0 auto;padding:24px 20px calc(24px + env(safe-area-inset-bottom,0px));border-radius:28px 28px 0 0;background:rgba(24,22,34,.92)}
-.sheet input{width:100%;padding:14px 16px;margin:10px 0 14px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.3);color:#fff;font:inherit}
-.conv{display:flex;gap:14px;align-items:center;padding:14px;margin-bottom:12px;cursor:pointer}
-.pic2{width:48px;height:48px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:600;color:#17130a}
-.conv h4{font-size:14px;font-weight:600;margin-bottom:3px}.conv p{font-size:12px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.conv .m{flex:1;min-width:0}.conv .t{font-size:11px;color:var(--mut);text-align:right;flex:none}
-.badge{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:99px;background:var(--gold);color:#17130a;font-size:11px;font-weight:600;margin-top:5px;padding:0 6px}
-.msgs{display:flex;flex-direction:column;gap:8px;margin:16px 0}
-.bub{max-width:78%;padding:11px 15px;border-radius:18px;font-size:14px;line-height:1.4}
-.bub.in{align-self:flex-start;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1);border-bottom-left-radius:6px}
-.bub.out{align-self:flex-end;background:var(--gold);color:#17130a;border-bottom-right-radius:6px}
-.send{display:flex;gap:10px;margin-bottom:12px}.send input{flex:1;padding:14px 18px;border-radius:99px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.3);color:#fff;font:inherit;font-size:14px}
-.send button{width:48px;border-radius:50%;border:0;background:var(--gold);color:#17130a;font-size:18px;cursor:pointer}
-.faq{padding:0 18px;margin-bottom:12px}
-.q{padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08);cursor:pointer}.q:last-child{border:0}
-.q div{display:flex;justify-content:space-between;gap:12px;font-size:14px;font-weight:600}.q div span{color:var(--gold);transition:.25s;flex:none}
-.q p{display:none;color:var(--mut);font-size:13px;line-height:1.6;margin-top:9px}.q.on p{display:block}.q.on div span{transform:rotate(45deg)}
-.legal{padding:20px;font-size:13px;line-height:1.65;color:rgba(255,255,255,.72)}
-.legal h3{font-family:'Cormorant Garamond',Georgia,serif;color:#fff;font-size:21px;font-weight:600;margin:16px 0 6px}.legal h3:first-child{margin-top:0}
-.legal small{display:block;margin-top:18px;color:var(--mut);font-size:11px}
-.set .r.go{cursor:pointer}
-.chrome{background:linear-gradient(180deg,#fff 0%,#b9bec8 38%,#4d525c 52%,#e8ebf0 72%,#8a8f99 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 14px rgba(255,255,255,.22))}
-.brand.chrome{letter-spacing:3px;font-size:28px}
-#splash{position:fixed;inset:0;z-index:60;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;cursor:pointer;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);transition:opacity .9s,visibility .9s}
-#splash.out{opacity:0;visibility:hidden}
-.sp-moon{position:absolute;top:6%;right:-16%;width:46vmin;height:46vmin;border-radius:50%;background:radial-gradient(circle at 35% 35%,#74747a,#1c1c20 60%,#050507);box-shadow:0 0 60px rgba(255,255,255,.08)}
-.sp-cloud{position:absolute;bottom:-4%;width:75%;height:34%;background:radial-gradient(ellipse at center,rgba(165,165,175,.55),rgba(60,60,66,.25) 45%,transparent 70%);filter:blur(22px);animation:drift 14s ease-in-out infinite alternate}
-.sp-cloud.l{left:-25%}.sp-cloud.r{right:-25%;animation-delay:-6s}
-@keyframes drift{to{transform:translateX(6%) scale(1.07)}}
-.sp-water{position:absolute;left:0;right:0;bottom:0;height:11%;background:repeating-linear-gradient(0deg,rgba(255,255,255,.08) 0 1px,transparent 1px 9px),linear-gradient(#000,#16161b)}
-.sp-word{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(76px,25vw,128px);letter-spacing:3px;line-height:1.1;position:relative;padding:0 .1em;margin-top:6px}
-.sp-word::after{content:'SYNQ';position:absolute;inset:0;background:none}
-.sp-tag{position:relative;margin-top:26px;font-size:11px;letter-spacing:.4em;color:rgba(255,255,255,.7);text-transform:uppercase}
-.sp-eq{display:flex;align-items:center;justify-content:center;gap:3px;height:24px;margin-top:20px;position:relative}
-.sp-eq span{width:2px;background:rgba(255,255,255,.65);border-radius:2px;animation:eq 1.2s ease-in-out infinite}
-@keyframes eq{50%{transform:scaleY(.3)}}
-.sp-btn{position:relative;margin-top:52px;padding:17px 32px;border-radius:99px;border:1px solid rgba(255,255,255,.55);color:#fff;letter-spacing:.28em;font-size:12px;text-transform:uppercase;background:rgba(255,255,255,.04);box-shadow:0 0 26px rgba(255,255,255,.18),inset 0 0 18px rgba(255,255,255,.06);animation:pulse 2.6s ease-in-out infinite}
-@keyframes pulse{50%{box-shadow:0 0 42px rgba(255,255,255,.36),inset 0 0 22px rgba(255,255,255,.1)}}
-.st{position:absolute;background:#fff;clip-path:polygon(50% 0,58% 42%,100% 50%,58% 58%,50% 100%,42% 58%,0 50%,42% 42%);animation:tw 3.2s ease-in-out infinite}
-@keyframes tw{50%{opacity:.2;transform:scale(.55)}}
+.empty{padding:28px 20px;text-align:center;border-style:dashed}
 .screen{position:relative;border-radius:14px;overflow:hidden;background:#000}
 .screen iframe{display:block;width:100%;aspect-ratio:16/9;border:0}
-.screen.playing #rth{display:none}
-.screen .th{aspect-ratio:16/9;font-size:14px;border-radius:0}
-.ph{text-align:center;font-size:13px;color:rgba(255,255,255,.85);padding:0 24px;line-height:1.55}.ph span{display:block;font-size:28px;margin-bottom:8px;color:#fff}
-.np{padding:16px 6px 4px;text-align:center}.np div:first-child{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:600;line-height:1.2}.np div+div{font-size:12px;color:var(--mut);margin-top:5px}
+.ph{text-align:center;font-size:13px;color:rgba(255,255,255,.85);padding:40px 24px}
+.stage{padding:12px;margin-bottom:14px}
+.np{padding:16px 6px 4px;text-align:center}
 .add{display:flex;gap:10px;padding:10px;margin-bottom:4px}
-.add input{flex:1;min-width:0;padding:13px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.3);color:#fff;font:inherit;font-size:14px}
-.add button{padding:0 22px;border-radius:14px;border:0;background:var(--gold);color:#17130a;font-weight:600;font-size:14px;cursor:pointer}
-#lerr{font-size:12px;color:#ff8fa3;min-height:18px;margin:4px 6px 4px}
-.row.now{border-color:rgba(255,255,255,.55);box-shadow:0 0 24px rgba(255,255,255,.12)}
-.row .x{color:var(--mut);padding:8px;cursor:pointer;font-size:13px}
-.row h4{overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.tile h4{overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.add input{flex:1;padding:13px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.3);color:#fff}
+.chat{padding:16px;margin-bottom:14px}
+.dock{position:fixed;left:14px;right:14px;bottom:14px;max-width:452px;margin:0 auto;display:flex;padding:8px;border-radius:26px;z-index:20}
+.dock button{flex:1;background:none;border:0;color:var(--mut);padding:9px 0;border-radius:18px;font:500 11px Inter;display:grid;gap:3px}
+.dock .on{background:rgba(255,255,255,.12);color:var(--gold)}
+.sheet{position:fixed;inset:0;z-index:30;display:none;align-items:flex-end;background:rgba(0,0,0,.5)}.sheet.on{display:flex}
+.sheet .glass{width:100%;max-width:480px;margin:0 auto;padding:24px 20px;border-radius:28px 28px 0 0;background:rgba(24,22,34,.92)}
+.sheet input{width:100%;padding:14px 16px;margin:10px 0 14px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.3);color:#fff}
+.chrome{background:linear-gradient(180deg,#fff 0%,#b9bec8 38%,#4d525c 52%,#e8ebf0 72%,#8a8f99 100%);-webkit-background-clip:text;color:transparent}
+#splash{position:fixed;inset:0;z-index:60;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:opacity .9s}
+#splash.out{opacity:0;visibility:hidden}
+.sp-word{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:88px;letter-spacing:3px}
+.sp-btn{margin-top:40px;padding:17px 32px;border-radius:99px;border:1px solid rgba(255,255,255,.55);color:#fff;letter-spacing:.28em;font-size:12px;text-transform:uppercase;background:rgba(255,255,255,.04)}
 </style></head>
 <body>
 <div class="bg"></div>
-<div id="splash" onclick="enter()">
-  <div class="sp-moon"></div><div class="sp-cloud l"></div><div class="sp-cloud r"></div><div class="sp-water"></div>
-  <svg width="150" viewBox="0 0 220 150" fill="none" style="position:relative;margin-bottom:-6px"><defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#7d828d"/><stop offset="1" stop-color="#e8ebf0"/></linearGradient></defs>
-    <g stroke="url(#cg)" stroke-width="3" stroke-linejoin="round"><path d="M78 42 L86 14 L101 31 L110 6 L119 31 L134 14 L142 42 Z M78 42 H142 V50 H78 Z" fill="rgba(255,255,255,.08)"/><path d="M42 112 C42 52 70 50 110 50 C150 50 178 52 178 112" stroke-width="6"/><ellipse cx="42" cy="112" rx="17" ry="28" fill="#0a0a0d"/><ellipse cx="178" cy="112" rx="17" ry="28" fill="#0a0a0d"/><ellipse cx="42" cy="112" rx="8" ry="18"/><ellipse cx="178" cy="112" rx="8" ry="18"/></g></svg>
-  <div class="sp-word chrome">SYNQ</div>
-  <div class="sp-tag">Listen &nbsp;✦&nbsp; Watch &nbsp;✦&nbsp; Connect</div>
-  <div class="sp-eq" id="eq"></div>
-  <div class="sp-btn">✦ &nbsp; Tap to enter &nbsp; »</div>
-</div>
+<div id="splash" onclick="this.classList.add('out')"><div class="sp-word chrome">SYNQ</div><div class="sp-btn">✦ Tap to enter »</div></div>
 <div class="wrap">
-  <div class="top">
-    <div class="brand serif chrome">SYNQ</div>
-    <button class="mode" id="mode">Liquid glass · On</button>
-  </div>
-
-  <!-- HOME -->
-  <section class="view on" id="v-home">
-    <h1>Good evening,<br><em id="hi">there.</em></h1>
-    <p class="sub">Music, videos and live rooms, all in one place. Press play, and invite someone to watch with you.</p>
-    <div class="glass add" style="margin-bottom:14px"><input id="sq" placeholder="Search songs, artists or videos…" autocomplete="off"><button id="sbtn">Search</button></div>
-    <div id="sres"></div>
-    <div class="chips" id="chips"></div>
-    <h2>Live rooms <small>See all</small></h2>
-    <div class="hs" id="liveRooms"></div>
-    <h2>New &amp; latest <small>Today</small></h2>
-    <div id="latest"></div>
-    <h2>For you <small>Popular now</small></h2>
-    <div class="grid" id="fyp"></div>
-  </section>
-
-  <!-- ROOMS -->
-  <section class="view" id="v-rooms">
-    <h1>Watch &amp; listen,<br><em>together.</em></h1>
-    <p class="sub">Open a room, share a link, and everyone stays perfectly in sync. Chat and react as it plays.</p>
-    <button class="btn" onclick="sheet(true)">＋ Create a room</button>
-    <div class="seg" id="seg"><div class="on" data-t="pub">Public</div><div data-t="pri">Private</div></div>
-    <div id="roomList"></div>
-  </section>
-
-  <!-- ROOM -->
-  <section class="view" id="v-room">
-    <p class="sub" style="margin:0 0 12px"><a href="#rooms" style="color:var(--gold);text-decoration:none">‹ Back to rooms</a></p>
-    <h1 id="rt">Room</h1>
-    <p class="sub" id="rs"></p>
-    <div class="glass stage">
-      <div class="screen" id="screen"><div class="th" id="rth"><div class="ph"><span>✦</span>Paste a YouTube link below<br>to start watching</div></div></div>
-      
-      <div class="np"><div id="npT">Nothing playing yet</div><div id="npS">Add a video to your queue</div></div>
-      <div class="ctl"><button id="pv">⏮</button><button class="pp" id="pp">▶</button><button id="nx">⏭</button></div>
-    </div>
-    <h2 style="margin-top:6px">Add to the queue</h2>
-    <div class="glass add"><input id="lk" placeholder="Paste a link or search YouTube…" inputmode="url" autocomplete="off"><button id="lb">Add</button></div>
-    <div id="lerr"></div>
-    <div id="rres"></div>
-    <h2 style="margin-top:10px">Up next</h2>
-    <div id="queue"></div>
-    <div class="glass chat">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><span class="serif" style="font-size:20px;font-weight:600">In the room</span>
-      <span id="avs"><span class="av" style="background:#f2f3f6">A</span><span class="av" style="background:#b4b8c2">R</span><span class="av" style="background:#8b8f99">M</span><span class="av" style="background:#5c606a;color:#fff;margin-right:0">+9</span></span></div>
-      <p><b>Rayyan</b> this part is so good</p>
-      <p><b>Maya</b> adding the next one to the queue</p>
-      <p><b>You</b> joined the room</p>
-      <input placeholder="Say something…">
-      <div class="react"><span>🔥</span><span>🎶</span><span>😍</span><span>👏</span></div>
-    </div>
-    <button class="btn ghost" id="inv">Invite friends on Telegram</button>
-    
-    
-  </section>
-
-  <!-- PLAYLISTS -->
-  <section class="view" id="v-lib">
-    <h1>Your <em>library.</em></h1>
-    <p class="sub">Playlists of songs and videos, saved and shared the way you like.</p>
-    <button class="btn">＋ New playlist</button>
-    <div id="pl"></div>
-  </section>
-
-  <!-- CHATS -->
-  <section class="view" id="v-dm">
-    <h1>Your <em>messages.</em></h1>
-    <p class="sub">Chat privately with friends, share songs and videos, and invite them straight into a room.</p>
-    <div id="dmList"></div>
-  </section>
-
-  <!-- CONVERSATION -->
-  <section class="view" id="v-chat">
-    <p class="sub" style="margin:0 0 12px"><a href="#dm" style="color:var(--gold);text-decoration:none">‹ All messages</a></p>
-    <h1 id="cn">Chat</h1>
-    <div class="msgs" id="msgs"></div>
-    <div class="send"><input id="mi" placeholder="Write a message…"><button id="sb">↑</button></div>
-    <button class="btn ghost" onclick="go('rooms')">Invite to a room</button>
-  </section>
-
-  <!-- FAQ -->
-  <section class="view" id="v-faq">
-    <p class="sub" style="margin:0 0 12px"><a href="#you" style="color:var(--gold);text-decoration:none">‹ Back to profile</a></p>
-    <h1>Help &amp; <em>FAQ.</em></h1>
-    <p class="sub">Quick answers to the things people ask us most.</p>
-    <div class="glass faq" id="faqList"></div>
-    <div class="glass legal"><h3>Still need help?</h3>Write to us at support@synq.app and we’ll reply within one working day.</div>
-  </section>
-
-  <!-- POLICIES -->
-  <section class="view" id="v-policy">
-    <p class="sub" style="margin:0 0 12px"><a href="#you" style="color:var(--gold);text-decoration:none">‹ Back to profile</a></p>
-    <h1>Privacy &amp; <em>terms.</em></h1>
-    <p class="sub">How we look after your data, and the rules that keep Synq a good place for everyone.</p>
-    <div class="seg" id="pseg"><div class="on" data-p="privacy">Privacy</div><div data-p="terms">Terms</div><div data-p="rules">Guidelines</div></div>
-    <div class="glass legal" id="pbody"></div>
-  </section>
-
-  <!-- ACCOUNT -->
-  <section class="view" id="v-you">
-    <div class="glass prof">
-      <div class="pic serif" id="pic">✦</div>
-      <div class="serif" id="pn" style="font-size:26px;font-weight:600">Guest</div>
-      <div id="pu" style="color:var(--mut);font-size:13px">Open Synq inside Telegram to sign in</div>
-      <div class="stats"><div><b>24</b>Playlists</div><div><b>312</b>Friends</div><div><b>86</b>Rooms hosted</div></div>
-    </div>
-    <h2>Appearance</h2>
-    <div class="glass set"><div class="r"><div>Liquid glass<small>Soft blur and depth. Turn off for a flat, classic look.</small></div><div class="sw on" id="swLiquid"></div></div></div>
-    <h2 style="display:none">YouTube search</h2>
-    <div class="glass set" style="display:none"><div class="r" style="display:block"><div>API key<small>Paste your YouTube Data API key to turn on search and trending. It stays in this browser only. Leave empty and tap Save to remove it.</small></div>
-      <div class="add" style="padding:12px 0 4px;margin:0"><input id="kin" type="password" placeholder="Paste API key" autocomplete="off"><button id="ksave">Save</button></div>
-      <small id="kst" style="color:var(--gold);min-height:16px"></small></div></div>
-    <h2>Watch together</h2>
-    <div class="glass set">
-      <div class="r"><div>Auto-sync playback<small>Stay on the same second as the host.</small></div><div class="sw on"></div></div>
-      <div class="r"><div>Let guests add to queue<small>Anyone in your room can suggest songs and videos.</small></div><div class="sw on"></div></div>
-      <div class="r"><div>Room chat<small>Show chat and reactions during playback.</small></div><div class="sw on"></div></div>
-      <div class="r"><div>New rooms are private<small>Only people with your link or code can join.</small></div><div class="sw"></div></div>
-    </div>
-    <h2>Account</h2>
-    <div class="glass set">
-      <div class="r"><div>Telegram<small id="tgs">Not connected</small></div><span style="color:var(--mut)">›</span></div>
-      <div class="r"><div>Notifications<small>Room invites and new releases.</small></div><div class="sw on"></div></div>
-      <div class="r"><div>Plan<small>Synq Plus · Renews 1 Dec</small></div><span style="color:var(--mut)">›</span></div>
-      <div class="r go" onclick="go('faq')"><div>Help &amp; FAQ<small>Answers, troubleshooting and contact.</small></div><span style="color:var(--mut)">›</span></div>
-      <div class="r go" onclick="go('policy')"><div>Privacy, terms &amp; guidelines<small>How we handle your data and keep rooms safe.</small></div><span style="color:var(--mut)">›</span></div>
-      <div class="r"><div style="color:#ff8fa3">Sign out</div></div>
-    </div>
-  </section>
+<div class="top"><div class="brand serif chrome">SYNQ</div><button class="mode">Liquid glass · On</button></div>
+<section class="view on" id="v-home"><h1>Good evening,<br><em id="hi">there.</em></h1><p class="sub">Music, videos and live rooms, all in one place.</p><div class="glass add"><input id="sq" placeholder="Search songs, artists or videos…"><button id="sbtn">Search</button></div><div id="sres"></div><div class="chips" id="chips"></div><h2>Live rooms <small id="liveCount">0 live</small></h2><div class="hs" id="liveRooms"></div><h2>New & latest</h2><div id="latest"></div><h2>For you</h2><div class="grid" id="fyp"></div></section>
+<section class="view" id="v-rooms"><h1>Watch & listen,<br><em>together.</em></h1><button class="btn" onclick="document.getElementById('sheet').classList.add('on')">＋ Create a room</button><div class="seg" id="seg"><div class="on" data-t="pub">Public</div><div data-t="pri">Private</div></div><div id="roomList"></div></section>
+<section class="view" id="v-room"><p class="sub"><a href="#rooms" style="color:var(--gold);text-decoration:none">‹ Back to rooms</a></p><h1 id="rt">Room</h1><p class="sub" id="rs"></p><div class="glass stage"><div class="screen" id="screen"><div class="th" id="rth"><div class="ph">Paste a YouTube link below to start watching</div></div></div><div class="np"><div id="npT">Nothing playing yet</div><div id="npS">Add a video to your queue</div></div></div><h2>Add to the queue</h2><div class="glass add"><input id="lk" placeholder="Paste a link or search YouTube…"><button id="lb">Add</button></div><div id="lerr"></div><div id="rres"></div><h2>Up next <small id="qcount">0 videos</small></h2><div id="queue"></div><div class="glass chat"><div style="display:flex;justify-content:space-between"><span class="serif" style="font-size:20px;font-weight:600">In the room</span><span id="avs"></span></div><div id="roomChat"><p class="sub" style="text-align:center">No messages yet. Say hi!</p></div><input id="roomMsg" placeholder="Say something…"></div><button class="btn ghost" id="inv">Invite friends — copy link</button><button class="btn ghost" id="leaveRoom" style="color:#ff8fa3">Leave room</button></section>
+<section class="view" id="v-lib"><h1>Your <em>library.</em></h1><div id="pl"></div></section>
+<section class="view" id="v-dm"><h1>Your <em>messages.</em></h1><div id="dmList"></div></section>
+<section class="view" id="v-you"><div class="glass" style="padding:22px;text-align:center"><div id="pn" style="font-size:26px;font-weight:600">Guest</div><div id="pu" style="color:var(--mut);font-size:13px">Open Synq inside Telegram</div></div></section>
 </div>
-
-<nav class="glass dock" id="dock">
-  <button data-v="home" class="on"><span>⌂</span>Home</button>
-  <button data-v="rooms"><span>◉</span>Rooms</button>
-  <button data-v="lib"><span>♫</span>Library</button>
-  <button data-v="dm"><span>✉</span>Chats</button>
-  <button data-v="you"><span>○</span>You</button>
-</nav>
-
-<div class="sheet" id="sheet" onclick="if(event.target===this)sheet(false)">
-  <div class="glass">
-    <div class="serif" style="font-size:28px;font-weight:600">Create a room</div>
-    <p class="sub" style="margin-bottom:6px">Give it a name, choose who can join, and you’re live.</p>
-    <input placeholder="Room name, e.g. Friday night watch party">
-    <div class="seg" id="seg2"><div class="on">Public</div><div>Private</div></div>
-    <div class="set" style="padding:0 4px"><div class="r"><div>Only I control playback<small>Guests can watch and chat, but not pause or skip.</small></div><div class="sw on"></div></div></div>
-    <button class="btn" onclick="sheet(false);go('room',0)">Start room</button>
-  </div>
-</div><script>
-/* The API key is saved from You → YouTube search */
-let YT_KEY=(()=>{try{return localStorage.getItem('synq_yt_key')||''}catch(e){return ''}})();const REGION='MY';
-const G=['#8b8f99,#15161a','#d7d9df,#2a2c33','#5c606a,#0d0e11','#b4b8c2,#1c1d22','#3a3d45,#e6e8ee','#70747e,#08080a'];
-const g=i=>`background:linear-gradient(135deg,${G[i%6]})`;
-const rooms=[
- ['Midnight lo-fi lounge','Aria',128,'pub','Music'],['Friday movie night','Rayyan',64,'pub','Video'],
- ['Study together','Maya',212,'pub','Focus'],['Indie discoveries','Noor',41,'pub','Music'],
- ['Family watch party','You',6,'pri','Video'],['Birthday playlist','Maya',9,'pri','Music']];
-const vids=[['Golden hour sessions','Live acoustic · 4:12','New'],['Behind the scenes: Aurora tour','Documentary · 18:40','New'],['Midnight drive mix','Playlist · 32 songs','Hot'],['Kopi & jazz, volume 3','Music video · 3:58','New']];
-const fyp=[['Sunset city pop','Mixtape · 24 songs'],['Her first live set','Concert · 52:10'],['Rainy day piano','Playlist · 40 songs'],['How it’s made: vinyl','Short film · 9:30'],['Late night R&B','Mixtape · 18 songs'],['Acoustic covers','Videos · 12']];
-const pls=[['Late night drive','48 songs · Private'],['Gym energy','31 songs · Public'],['Shared with Maya','22 items · Collaborative'],['Chill & study','76 songs · Public'],['Saved videos','14 videos · Private']];
+<nav class="glass dock"><button data-v="home" class="on" onclick="show('home')">⌂ Home</button><button data-v="rooms" onclick="show('rooms')">◉ Rooms</button><button data-v="lib" onclick="show('lib')">♫ Library</button><button data-v="dm" onclick="show('dm')">✉ Chats</button><button data-v="you" onclick="show('you')">○ You</button></nav>
+<div class="sheet" id="sheet" onclick="if(event.target===this)this.classList.remove('on')"><div class="glass"><div class="serif" style="font-size:28px;font-weight:600">Create a room</div><input id="newRoomName" placeholder="Room name, e.g. Friday night watch party"><div class="seg" id="seg2"><div class="on" data-t="pub">Public</div><div data-t="pri">Private</div></div><button class="btn" id="createBtn">Start room</button></div></div>
+<script>
 const $=s=>document.querySelector(s);
-const th=(i,t,x='')=>`<div class="th" style="${g(i)}">▶${t?`<b>${t}</b>`:''}</div>`;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function loadRooms(){try{return JSON.parse(localStorage.getItem('synq_rooms')||'[]')}catch(e){return []}}
+function saveRooms(r){localStorage.setItem('synq_rooms',JSON.stringify(r))}
+let rooms=loadRooms();let currentRoomId=null;
+const G=['#8b8f99,#15161a','#d7d9df,#2a2c33','#5c606a,#0d0e11'];
+const g=i=>`background:linear-gradient(135deg,${G[i%6]})`;
+const th=(i,t)=>`<div class="th" style="${g(i)}">▶${t?`<b style="position:absolute;left:8px;bottom:8px;font-size:10px;background:rgba(0,0,0,.5);padding:3px 8px;border-radius:99px">${t}</b>`:''}</div>`;
 $('#chips').innerHTML=['All','Music','Videos','Podcasts','Live','Chill'].map((c,i)=>`<div class="chip${i?'':' on'}">${c}</div>`).join('');
-$('#liveRooms').innerHTML=rooms.slice(0,4).map((r,i)=>`<div class="glass live" onclick="go('room',${i})">${th(i,'● LIVE')}<h4>${r[0]}</h4><p>Hosted by ${r[1]} · ${r[2]} listening</p></div>`).join('');
-$('#latest').innerHTML=vids.map((v,i)=>`<div class="glass row">${th(i+2,v[2].toUpperCase())}<div><h4>${v[0]}</h4><p>${v[1]}</p></div></div>`).join('');
-$('#fyp').innerHTML=fyp.map((v,i)=>`<div class="glass tile">${th(i+1,'')}<h4>${v[0]}</h4><p>${v[1]}</p></div>`).join('');
-$('#pl').innerHTML=pls.map((p,i)=>`<div class="glass row"><div class="cover" style="${g(i)}"></div><div><h4>${p[0]}</h4><p>${p[1]}</p></div></div>`).join('');
-
-function renderRooms(t){$('#roomList').innerHTML=rooms.map((r,i)=>[r,i]).filter(x=>x[0][3]===t).map(([r,i])=>`<div class="glass row" onclick="go('room',${i})">${th(i,r[3]==='pri'?'PRIVATE':'● LIVE')}<div><h4>${r[0]}</h4><p>${r[1]} · ${r[2]} in room</p>${r[3]==='pri'?'<p class="lock">🔒 Invite link or code needed</p>':''}</div></div>`).join('')}
+function renderLive(){
+  const pub=rooms.filter(r=>r.type==='pub');
+  $('#liveCount').textContent=pub.length?`${pub.length} live`:'0 live';
+  if(!pub.length){$('#liveRooms').innerHTML=`<div class="glass empty"><p style="font-weight:600">No live rooms right now</p><p class="sub" style="margin:8px 0 0">Create a public room to go live.</p></div>`}
+  else{$('#liveRooms').innerHTML=pub.map((r,i)=>`<div class="glass live" onclick="openRoom('${r.id}')">${th(i,'● LIVE')}<h4>${esc(r.name)}</h4><p>${esc(r.host)} · ${r.members||1} listening</p></div>`).join('')}
+}
+renderLive();
+function renderRooms(t){
+  const f=rooms.filter(r=>r.type===t);
+  if(!f.length){$('#roomList').innerHTML=`<div class="glass empty"><p>${t==='pub'?'No public rooms':'No private rooms yet'}</p><p class="sub">${t==='pub'?'Public rooms appear on Home.':'Private rooms need invite link.'}</p></div>`;return}
+  $('#roomList').innerHTML=f.map((r,i)=>`<div class="glass row" onclick="openRoom('${r.id}')">${th(i,r.type==='pri'?'PRIVATE':'● LIVE')}<div><h4>${esc(r.name)}</h4><p>${esc(r.host)} · ${r.members||1} in room</p></div></div>`).join('')
+}
 renderRooms('pub');
 document.querySelectorAll('#seg div').forEach(d=>d.onclick=()=>{document.querySelectorAll('#seg div').forEach(x=>x.classList.remove('on'));d.classList.add('on');renderRooms(d.dataset.t)});
-document.querySelectorAll('#seg2 div').forEach(d=>d.onclick=()=>{document.querySelectorAll('#seg2 div').forEach(x=>x.classList.remove('on'));d.classList.add('on')});
-document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');loadFeed(c.textContent)});
-document.querySelectorAll('.sw').forEach(s=>{if(s.id!=='swLiquid')s.onclick=()=>s.classList.toggle('on')});
-function show(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));document.querySelectorAll('#dock button').forEach(b=>b.classList.toggle('on',b.dataset.v===({room:'rooms',chat:'dm',faq:'you',policy:'you'}[v]||v)));scrollTo(0,0)}
-function go(v,i){if(v==='room'){const r=rooms[i];$('#rt').textContent=r[0];$('#rs').textContent=(r[3]==='pri'?'Private room · ':'Public room · ')+'hosted by '+r[1];$('#rth').style.cssText=g(i)}show(v)}
-document.querySelectorAll('#dock button').forEach(b=>b.onclick=()=>{if(b.dataset.v==='home'&&$('#v-home').classList.contains('on')){const n=document.querySelector('.chip.on');loadFeed(n?n.textContent:'All',true)}location.hash=b.dataset.v;show(b.dataset.v)});
-addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(['home','rooms','lib','dm','you','faq','policy'].includes(h))show(h)});
-function sheet(o){$('#sheet').classList.toggle('on',o)}
-
-function liquid(on){document.body.classList.toggle('classic',!on);$('#mode').textContent='Liquid glass · '+(on?'On':'Off');$('#swLiquid').classList.toggle('on',on)}
-$('#mode').onclick=()=>liquid(document.body.classList.contains('classic'));
-$('#swLiquid').onclick=()=>liquid(document.body.classList.contains('classic'));
-const convos=[['Maya','Adding the next one to the queue','2m',2],['Rayyan','Movie night at 9?','1h',1],['Noor','Sent you a playlist: Late night drive','Yesterday',0],['Synq Team','Welcome to Synq Plus','Mon',0]];
-function renderDm(){$('#dmList').innerHTML=convos.map((c,i)=>`<div class="glass conv" onclick="openChat(${i})"><div class="pic2" style="${g(i)}">${c[0][0]}</div><div class="m"><h4>${c[0]}</h4><p>${c[1]}</p></div><div class="t">${c[2]}${c[3]?`<br><span class="badge">${c[3]}</span>`:''}</div></div>`).join('')}
-renderDm();
-function openChat(i){convos[i][3]=0;renderDm();$('#cn').textContent=convos[i][0];$('#msgs').innerHTML=[['in','Hey! Are you free tonight?'],['out','Yes! Want to start a room?'],['in',convos[i][1]]].map(m=>`<div class="bub ${m[0]}">${m[1]}</div>`).join('');show('chat')}
-function sendMsg(){const v=$('#mi'),t=v.value.trim();if(!t)return;const d=document.createElement('div');d.className='bub out';d.textContent=t;$('#msgs').appendChild(d);v.value=''}
-$('#sb').onclick=sendMsg;$('#mi').onkeydown=e=>{if(e.key==='Enter')sendMsg()};
-const faqs=[['What is Synq?','Synq is a place to listen to music, watch videos and enjoy them together in live rooms with friends, all in sync.'],['How do I start a room?','Open Rooms, tap Create a room, name it and choose Public or Private. Then share the link or invite friends from Chats.'],['What is the difference between public and private rooms?','Anyone can find and join a public room. A private room can only be joined with your invite link or code.'],['Why is my video out of sync?','Turn on Auto-sync playback in Settings. If it still drifts, check your connection and tap play again to re-sync with the host.'],['Can guests control playback?','Only if the host allows it. By default, the host controls play, pause and skip, and guests can watch and chat.'],['How do I leave or delete a room?','Leave any room from its page. Hosts can close a room at any time, which removes everyone from it.'],['How do I report or block someone?','Open their profile or a message, tap the menu and choose Report or Block. Our team reviews every report.'],['How do I cancel Synq Plus?','Go to You, then Plan, and choose Cancel. You keep Plus until the end of the billing period.']];
-$('#faqList').innerHTML=faqs.map(f=>`<div class="q"><div>${f[0]}<span>＋</span></div><p>${f[1]}</p></div>`).join('');
-document.querySelectorAll('.q').forEach(q=>q.onclick=()=>q.classList.toggle('on'));
-const pol={privacy:'<h3>What we collect</h3>Your account details, playlists, listening and watching activity, and messages you send in rooms and chats.<h3>How we use it</h3>To run Synq, keep rooms in sync, recommend music and videos, and keep the community safe. We never sell your personal data.<h3>Your choices</h3>You can download or delete your data, and turn off personalised recommendations, in Settings at any time.<h3>Who can see what</h3>Private rooms and direct messages are visible only to the people in them. Public rooms are visible to everyone.<small>Last updated 5 November 2026</small>',terms:'<h3>Using Synq</h3>You must be at least 13 years old. You are responsible for your account and for what you share in rooms and chats.<h3>Content</h3>Videos and music stream from licensed sources. Do not upload or share content you do not have the right to use.<h3>Plus subscriptions</h3>Synq Plus renews automatically until cancelled. You can cancel any time from your account.<h3>Ending an account</h3>We may suspend accounts that break these terms or our community guidelines.<small>Last updated 5 November 2026</small>',rules:'<h3>Be kind</h3>No harassment, hate or threats, in rooms or in messages.<h3>Keep it safe</h3>No sexual content involving minors, graphic violence or anything that puts someone at risk.<h3>Respect creators</h3>Only share content you are allowed to share. Copyright claims are taken seriously.<h3>Hosts are in charge</h3>Room hosts can mute, remove or ban anyone who disrupts the room.<h3>Report problems</h3>Use Report on any message, room or profile. Repeat or serious violations lead to a ban.<small>Last updated 5 November 2026</small>'};
-function showPol(k){$('#pbody').innerHTML=pol[k]}showPol('privacy');
-document.querySelectorAll('#pseg div').forEach(d=>d.onclick=()=>{document.querySelectorAll('#pseg div').forEach(x=>x.classList.remove('on'));d.classList.add('on');showPol(d.dataset.p)});
-[[12,14,26],[78,8,18],[88,52,24],[7,58,14],[22,34,10],[68,26,12],[50,13,30],[92,24,12],[38,86,12],[84,80,10]].forEach((s,i)=>{const e=document.createElement('i');e.className='st';e.style.cssText=`left:${s[0]}%;top:${s[1]}%;width:${s[2]}px;height:${s[2]}px;animation-delay:-${i*.7}s`;$('#splash').prepend(e)});
-$('#eq').innerHTML=[8,14,10,20,12,6,16,22,10,18,8,14].map((h,i)=>`<span style="height:${h}px;animation-delay:-${i*.15}s"></span>`).join('');
-function enter(){$('#splash').classList.add('out')}
-const Q=[];let cur=-1,playing=false;
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let newType='pub';document.querySelectorAll('#seg2 div').forEach(d=>d.onclick=()=>{document.querySelectorAll('#seg2 div').forEach(x=>x.classList.remove('on'));d.classList.add('on');newType=d.dataset.t});
+function show(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));window.scrollTo(0,0)}
+function openRoom(id){
+  const r=rooms.find(x=>x.id===id);if(!r)return;
+  currentRoomId=id;$('#rt').textContent=r.name;$('#rs').textContent=(r.type==='pri'?'Private · ':'Public · ')+r.host+` · ID ${r.id.slice(0,6)}`;
+  document.getElementById('roomChat').innerHTML=`<p><b>${esc(r.host)}</b> created the room</p><p><b>You</b> joined the room</p>`;
+  location.hash=`room?id=${id}`;show('room');
+}
+function createRoom(){
+  const nameEl=$('#newRoomName');const name=nameEl.value.trim()||`Room ${new Date().toLocaleTimeString()}`;
+  const id=Math.random().toString(36).slice(2,9);const host=$('#pn').textContent||'You';
+  const room={id,name,host,type:newType,members:1,created:Date.now()};
+  rooms.unshift(room);saveRooms(rooms);renderLive();renderRooms(document.querySelector('#seg .on')?.dataset.t||'pub');
+  document.getElementById('sheet').classList.remove('on');nameEl.value='';openRoom(id);
+}
+document.getElementById('createBtn').onclick=createRoom;
+const Q=[];let cur=-1;
+function play(i){if(!Q[i])return;cur=i;const s=$('#screen');const o=$('#yt');if(o)o.remove();const f=document.createElement('iframe');f.id='yt';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.src=`https://www.youtube.com/embed/${Q[i].id}?autoplay=1&rel=0`;s.appendChild(f);document.getElementById('npT').textContent=Q[i].t;document.getElementById('npS').textContent=Q[i].a}
 const yid=u=>{u=u.trim();const m=u.match(/(?:v=|youtu\.be\/|shorts\/|embed\/|live\/)([\w-]{11})/)||u.match(/^([\w-]{11})$/);return m&&m[1]};
-function cmd(f){const y=$('#yt');if(y&&y.contentWindow)y.contentWindow.postMessage(JSON.stringify({event:'command',func:f,args:''}),'*')}
-function setPP(p){playing=p;$('#pp').textContent=p?'❚❚':'▶'}
-function np(){const q=Q[cur];$('#npT').textContent=q?q.t:'Nothing playing yet';$('#npS').textContent=q?q.a:'Add a video to your queue'}
-function renderQueue(){$('#queue').innerHTML=Q.length?Q.map((q,i)=>`<div class="glass row${i===cur?' now':''}" onclick="play(${i})"><div class="th" style="${g(i)}"><img src="https://i.ytimg.com/vi/${q.id}/mqdefault.jpg" alt="" onerror="this.remove()">${i===cur?'<b>NOW PLAYING</b>':''}</div><div style="flex:1;min-width:0"><h4>${esc(q.t)}</h4><p>${esc(q.a)}</p></div><span class="x" onclick="rm(event,${i})">✕</span></div>`).join(''):'<p class="sub" style="text-align:center;margin:6px 0 18px">Your queue is empty. Paste a link above to add the first video.</p>'}
-function play(i){if(!Q[i])return;cur=i;const s=$('#screen');s.classList.add('playing');const o=$('#yt');if(o)o.remove();const f=document.createElement('iframe');f.id='yt';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';f.src=`https://www.youtube.com/embed/${Q[i].id}?enablejsapi=1&autoplay=1&rel=0&playsinline=1&modestbranding=1`;f.onload=()=>f.contentWindow.postMessage(JSON.stringify({event:'listening',id:1}),'*');s.appendChild(f);np();setPP(true);renderQueue()}
-function next(){if(Q.length)play((cur+1)%Q.length)}
-function rm(e,i){e.stopPropagation();Q.splice(i,1);if(i===cur){if(Q.length)play(Math.min(i,Q.length-1));else{cur=-1;const o=$('#yt');if(o)o.remove();$('#screen').classList.remove('playing');np();setPP(false)}}else if(i<cur)cur--;renderQueue()}
-async function addLink(){const i=$('#lk'),e=$('#lerr'),id=yid(i.value);if(!id){if(!hasKey()){e.textContent='Paste a YouTube link, or add your API key in You → YouTube search.';return}e.textContent='Searching…';try{const r=await search(i.value);$('#rres').innerHTML=r.map(vrow).join('');e.textContent=r.length?'':'No results found.'}catch(x){console.error(x);e.textContent='Search is busy right now. Try again in a moment.'}return}e.textContent='';i.value='';const it={id,t:'YouTube video',a:'Added by you'};Q.push(it);if(cur<0)play(Q.length-1);else renderQueue();try{const r=await fetch('https://www.youtube.com/oembed?format=json&url='+encodeURIComponent('https://www.youtube.com/watch?v='+id));const d=await r.json();it.t=d.title;it.a=d.author_name+' · added by you';renderQueue();if(Q[cur]===it)np()}catch(x){}}
+async function addLink(){
+  const i=$('#lk'),id=yid(i.value);if(!id)return;
+  i.value='';const it={id,t:'YouTube video',a:'Added by you'};Q.push(it);if(cur<0)play(Q.length-1);document.getElementById('queue').innerHTML=Q.map((q,i)=>`<div class="glass row" onclick="play(${i})"><div class="th" style="${g(i)}"><img src="https://i.ytimg.com/vi/${q.id}/mqdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div><div><h4>${esc(q.t)}</h4><p>${esc(q.a)}</p></div></div>`).join('');
+  try{const r=await fetch('https://www.youtube.com/oembed?format=json&url='+encodeURIComponent('https://www.youtube.com/watch?v='+id));const d=await r.json();it.t=d.title;it.a=d.author_name;document.getElementById('queue').innerHTML=Q.map((q,i)=>`<div class="glass row" onclick="play(${i})"><div class="th" style="${g(i)}"><img src="https://i.ytimg.com/vi/${q.id}/mqdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div><div><h4>${esc(q.t)}</h4><p>${esc(q.a)}</p></div></div>`).join('');if(Q[cur]===it){document.getElementById('npT').textContent=it.t}}catch(e){}
+}
 $('#lb').onclick=addLink;$('#lk').onkeydown=e=>{if(e.key==='Enter')addLink()};
-$('#nx').onclick=next;$('#pv').onclick=()=>{if(Q.length)play((cur-1+Q.length)%Q.length)};
-$('#pp').onclick=()=>{if(cur<0){$('#lk').focus();return}cmd(playing?'pauseVideo':'playVideo');setPP(!playing)};
-addEventListener('message',e=>{if(!/youtube\.com$/.test(new URL(e.origin).hostname))return;try{const d=JSON.parse(e.data);if(d.event==='onStateChange'){if(d.info===0)next();else if(d.info===1)setPP(true);else if(d.info===2)setPP(false)}}catch(x){}});
-renderQueue();
-const hasKey=()=>true;
-const V={};
-const dec=s=>{const t=document.createElement('textarea');t.innerHTML=s;return t.value};
-async function yt(path,params){const u=new URL('/api/yt',location.origin);u.searchParams.set('path',path);Object.entries(params).forEach(([k,v])=>u.searchParams.set(k,v));const r=await fetch(u);if(!r.ok){let m=r.status;try{m+=' · '+(await r.json()).error.message}catch(e){}throw new Error(m)}return r.json()}
-const norm=it=>{const id=it.id.videoId||it.id,s=it.snippet,o={id,t:dec(s.title),a:dec(s.channelTitle)};V[id]=o;return o};
-const search=async q=>(await yt('search',{part:'snippet',type:'video',videoEmbeddable:'true',maxResults:10,q})).items.map(norm);
-const trending=async(x={})=>(await yt('videos',{part:'snippet,status',chart:'mostPopular',regionCode:REGION,maxResults:16,...x})).items.filter(i=>i.status.embeddable).map(norm);
-const searchX=async(q,x={})=>(await yt('search',{part:'snippet',type:'video',videoEmbeddable:'true',maxResults:16,q,...x})).items.map(norm);
-const vrow=(v,i)=>`<div class="glass row" onclick="watch('${v.id}')"><div class="th" style="${g(i)}"><img src="https://i.ytimg.com/vi/${v.id}/mqdefault.jpg" alt="" onerror="this.remove()"></div><div style="flex:1;min-width:0"><h4>${esc(v.t)}</h4><p>${esc(v.a)}</p></div><span class="x" title="Add to queue" onclick="qadd(event,'${v.id}')">＋</span></div>`;
-const vtile=(v,i)=>`<div class="glass tile" onclick="watch('${v.id}')"><div class="th" style="${g(i)}"><img src="https://i.ytimg.com/vi/${v.id}/mqdefault.jpg" alt="" onerror="this.remove()"></div><h4>${esc(v.t)}</h4><p>${esc(v.a)}</p></div>`;
-function watch(id){const v=V[id];if(!v)return;let i=Q.findIndex(q=>q.id===id);if(i<0){Q.push({id,t:v.t,a:v.a});i=Q.length-1}play(i);if($('#rt').textContent==='Room'){$('#rt').textContent='Your room';$('#rs').textContent='Private room · invite friends to watch with you'}show('room')}
-function qadd(e,id){e.stopPropagation();const v=V[id];if(v&&!Q.some(q=>q.id===id)){Q.push({id,t:v.t,a:v.a});if(cur<0)play(Q.length-1);else renderQueue()}e.target.textContent='✓'}
-async function homeSearch(){const q=$('#sq').value.trim(),o=$('#sres');if(!q)return;if(!hasKey()){o.innerHTML='<p class="sub">Add your YouTube API key in You → YouTube search to turn on search.</p>';return}o.innerHTML='<p class="sub">Searching…</p>';try{const r=await search(q);o.innerHTML=`<h2 style="margin-top:4px">Results <small>${r.length} videos</small></h2>`+r.map(vrow).join('')}catch(x){console.error(x);o.innerHTML='<p class="sub">Search is busy right now. Please try again in a moment.</p>'}}
-$('#sbtn').onclick=homeSearch;$('#sq').onkeydown=e=>{if(e.key==='Enter')homeSearch()};
-const FEED={};
-function paint(l){if(l.length>3){$('#latest').innerHTML=l.slice(0,4).map(vrow).join('');$('#fyp').innerHTML=l.slice(4,10).map(vtile).join('')}}
-async function loadFeed(n,force){if(!hasKey())return;const f={Music:()=>trending({videoCategoryId:10}),Videos:()=>trending({videoCategoryId:24}),Podcasts:()=>searchX('podcast'),Live:()=>searchX('live',{eventType:'live'}),Chill:()=>searchX('chill lofi music')}[n]||(()=>trending());$('#latest').style.opacity=.4;try{if(force||!FEED[n])FEED[n]=await f();paint(FEED[n])}catch(x){console.error(x);$('#sres').innerHTML='<p class="sub">Couldn’t load videos right now. Please try again in a moment.</p>'}$('#latest').style.opacity=1}
-function loadTrending(){loadFeed('All',true)}
-if(hasKey()){loadTrending();$('#kst').textContent='Key saved ✓ Search is on.'}
-$('#ksave').onclick=()=>{const v=$('#kin').value.trim();try{v?localStorage.setItem('synq_yt_key',v):localStorage.removeItem('synq_yt_key')}catch(e){}YT_KEY=v;$('#kin').value='';$('#kst').textContent=v?'Saved ✓ Search is on.':'Key removed.';if(v)loadTrending()};
-const TG=window.Telegram&&window.Telegram.WebApp;
-if(TG){try{TG.ready();TG.expand();TG.setHeaderColor('#050507');TG.setBackgroundColor('#050507')}catch(e){}}
-const U=TG&&TG.initDataUnsafe&&TG.initDataUnsafe.user;
-if(U){const full=[U.first_name,U.last_name].filter(Boolean).join(' ');$('#hi').textContent=U.first_name+'.';$('#pn').textContent=full;$('#pu').textContent=(U.username?'@'+U.username+' · ':'')+'Telegram';$('#tgs').textContent=(U.username?'@'+U.username:full)+' · ID '+U.id;$('#pic').innerHTML=U.photo_url?`<img src="${esc(U.photo_url)}" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`:esc((U.first_name||'?')[0])}
-$('#inv').onclick=()=>{const u='https://t.me/share/url?url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent('Join me on Synq — let’s listen & watch together');TG&&TG.openTelegramLink?TG.openTelegramLink(u):window.open(u,'_blank')};
+$('#inv').onclick=()=>{
+  if(!currentRoomId){alert('Create a room first!');return}
+  const link=`${location.origin}${location.pathname}#room?id=${currentRoomId}`;
+  navigator.clipboard.writeText(link).then(()=>alert('Invite link copied!\n'+link)).catch(()=>prompt('Copy this link:',link));
+};
+document.getElementById('leaveRoom').onclick=()=>{currentRoomId=null;location.hash='rooms';show('rooms')};
+document.getElementById('roomMsg').onkeydown=e=>{if(e.key==='Enter'){const v=e.target.value.trim();if(!v)return;const c=document.getElementById('roomChat');const p=document.createElement('p');p.innerHTML=`<b>You</b> ${esc(v)}`;c.appendChild(p);e.target.value=''}};
+(function(){const h=location.hash;if(h.includes('room?id=')){const id=new URLSearchParams(h.split('?')[1]).get('id');if(id)setTimeout(()=>openRoom(id),300)}})();
+const TG=window.Telegram&&window.Telegram.WebApp;if(TG){try{TG.ready();TG.expand()}catch(e){}}
+const U=TG&&TG.initDataUnsafe&&TG.initDataUnsafe.user;if(U){const full=[U.first_name,U.last_name].filter(Boolean).join(' ');document.getElementById('hi').textContent=U.first_name+'.';document.getElementById('pn').textContent=full;document.getElementById('pu').textContent=(U.username?'@'+U.username+' · ':'')+'Telegram'}
 </script>
 </body>
 </html>
