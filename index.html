@@ -9,131 +9,52 @@
 <style>
 :root{color-scheme:dark;--gold:#e9ebf0;--ink:#050507;--mut:rgba(255,255,255,.55)}
 *{margin:0;padding:0;box-sizing:border-box}
-html{padding-top:env(safe-area-inset-top,0px)}
-body{font-family:Inter,sans-serif;background:var(--ink);color:#fff;min-height:100vh;overflow-x:hidden;padding-bottom:110px}
+body{font-family:Inter,sans-serif;background:var(--ink);color:#fff;min-height:100vh;padding-bottom:110px}
 .bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(900px 700px at 15% 0%,rgba(255,255,255,.12),transparent),var(--ink)}
-.wrap{max-width:480px;margin:0 auto;padding:18px 18px 0}
-.serif{font-family:'Cormorant Garamond',serif}
-.glass{backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.16);border-radius:22px}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
-.brand{font-size:30px;font-weight:600}
-.mode{font-size:11px;padding:8px 13px;border-radius:99px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff}
-h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:38px;line-height:1.02}
-h1 em{color:var(--gold)}
-.sub{color:var(--mut);font-size:14px;line-height:1.55;margin:10px 0 20px}
-h2{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:600;margin:26px 0 12px;display:flex;justify-content:space-between}
+.wrap{max-width:480px;margin:0 auto;padding:18px}
+.glass{backdrop-filter:blur(30px) saturate(180%);background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.16);border-radius:22px}
 .view{display:none}.view.on{display:block}
-.chips{display:flex;gap:8px;overflow-x:auto}
-.chip{flex:none;padding:9px 16px;border-radius:99px;font-size:13px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:var(--mut)}
-.chip.on{background:var(--gold);color:#17130a;font-weight:600}
-.hs{display:flex;gap:12px;overflow-x:auto;margin:0 -18px;padding:0 18px 6px}
-.live{flex:none;width:210px;padding:12px;cursor:pointer}
-.th{border-radius:14px;aspect-ratio:16/9;position:relative;display:grid;place-items:center;font-size:20px;overflow:hidden;background:linear-gradient(135deg,#8b8f99,#15161a)}
-.live h4,.row h4{font-size:14px;font-weight:600;margin:10px 0 3px}
-.live p,.row p{font-size:12px;color:var(--mut)}
-.row{display:flex;gap:14px;padding:12px;margin-bottom:12px;align-items:center;cursor:pointer}
-.row .th{width:112px;flex:none;border-radius:12px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.tile{padding:10px;cursor:pointer}
-.seg{display:flex;padding:5px;border-radius:16px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);margin-bottom:16px}
-.seg div{flex:1;text-align:center;padding:10px;border-radius:12px;font-size:13px;font-weight:600;color:var(--mut);cursor:pointer}
-.seg .on{background:rgba(255,255,255,.14);color:#fff}
-.btn{width:100%;padding:16px;border-radius:16px;border:0;background:var(--gold);color:#17130a;font-weight:600;font-size:15px;cursor:pointer;margin-bottom:14px}
-.btn.ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.15)}
-.empty{padding:28px 20px;text-align:center;border-style:dashed}
-.screen{position:relative;border-radius:14px;overflow:hidden;background:#000}
-.screen iframe{display:block;width:100%;aspect-ratio:16/9;border:0}
-.ph{text-align:center;font-size:13px;color:rgba(255,255,255,.85);padding:40px 24px}
-.stage{padding:12px;margin-bottom:14px}
-.np{padding:16px 6px 4px;text-align:center}
-.add{display:flex;gap:10px;padding:10px;margin-bottom:4px}
-.add input{flex:1;padding:13px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.3);color:#fff}
-.chat{padding:16px;margin-bottom:14px}
-.dock{position:fixed;left:14px;right:14px;bottom:14px;max-width:452px;margin:0 auto;display:flex;padding:8px;border-radius:26px;z-index:20}
-.dock button{flex:1;background:none;border:0;color:var(--mut);padding:9px 0;border-radius:18px;font:500 11px Inter;display:grid;gap:3px}
-.dock .on{background:rgba(255,255,255,.12);color:var(--gold)}
-.sheet{position:fixed;inset:0;z-index:30;display:none;align-items:flex-end;background:rgba(0,0,0,.5)}.sheet.on{display:flex}
-.sheet .glass{width:100%;max-width:480px;margin:0 auto;padding:24px 20px;border-radius:28px 28px 0 0;background:rgba(24,22,34,.92)}
-.sheet input{width:100%;padding:14px 16px;margin:10px 0 14px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.3);color:#fff}
-.chrome{background:linear-gradient(180deg,#fff 0%,#b9bec8 38%,#4d525c 52%,#e8ebf0 72%,#8a8f99 100%);-webkit-background-clip:text;color:transparent}
-#splash{position:fixed;inset:0;z-index:60;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:opacity .9s}
-#splash.out{opacity:0;visibility:hidden}
-.sp-word{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:88px;letter-spacing:3px}
-.sp-btn{margin-top:40px;padding:17px 32px;border-radius:99px;border:1px solid rgba(255,255,255,.55);color:#fff;letter-spacing:.28em;font-size:12px;text-transform:uppercase;background:rgba(255,255,255,.04)}
-</style></head>
-<body>
-<div class="bg"></div>
-<div id="splash" onclick="this.classList.add('out')"><div class="sp-word chrome">SYNQ</div><div class="sp-btn">✦ Tap to enter »</div></div>
-<div class="wrap">
-<div class="top"><div class="brand serif chrome">SYNQ</div><button class="mode">Liquid glass · On</button></div>
-<section class="view on" id="v-home"><h1>Good evening,<br><em id="hi">there.</em></h1><p class="sub">Music, videos and live rooms, all in one place.</p><div class="glass add"><input id="sq" placeholder="Search songs, artists or videos…"><button id="sbtn">Search</button></div><div id="sres"></div><div class="chips" id="chips"></div><h2>Live rooms <small id="liveCount">0 live</small></h2><div class="hs" id="liveRooms"></div><h2>New & latest</h2><div id="latest"></div><h2>For you</h2><div class="grid" id="fyp"></div></section>
-<section class="view" id="v-rooms"><h1>Watch & listen,<br><em>together.</em></h1><button class="btn" onclick="document.getElementById('sheet').classList.add('on')">＋ Create a room</button><div class="seg" id="seg"><div class="on" data-t="pub">Public</div><div data-t="pri">Private</div></div><div id="roomList"></div></section>
-<section class="view" id="v-room"><p class="sub"><a href="#rooms" style="color:var(--gold);text-decoration:none">‹ Back to rooms</a></p><h1 id="rt">Room</h1><p class="sub" id="rs"></p><div class="glass stage"><div class="screen" id="screen"><div class="th" id="rth"><div class="ph">Paste a YouTube link below to start watching</div></div></div><div class="np"><div id="npT">Nothing playing yet</div><div id="npS">Add a video to your queue</div></div></div><h2>Add to the queue</h2><div class="glass add"><input id="lk" placeholder="Paste a link or search YouTube…"><button id="lb">Add</button></div><div id="lerr"></div><div id="rres"></div><h2>Up next <small id="qcount">0 videos</small></h2><div id="queue"></div><div class="glass chat"><div style="display:flex;justify-content:space-between"><span class="serif" style="font-size:20px;font-weight:600">In the room</span><span id="avs"></span></div><div id="roomChat"><p class="sub" style="text-align:center">No messages yet. Say hi!</p></div><input id="roomMsg" placeholder="Say something…"></div><button class="btn ghost" id="inv">Invite friends — copy link</button><button class="btn ghost" id="leaveRoom" style="color:#ff8fa3">Leave room</button></section>
-<section class="view" id="v-lib"><h1>Your <em>library.</em></h1><div id="pl"></div></section>
-<section class="view" id="v-dm"><h1>Your <em>messages.</em></h1><div id="dmList"></div></section>
-<section class="view" id="v-you"><div class="glass" style="padding:22px;text-align:center"><div id="pn" style="font-size:26px;font-weight:600">Guest</div><div id="pu" style="color:var(--mut);font-size:13px">Open Synq inside Telegram</div></div></section>
-</div>
-<nav class="glass dock"><button data-v="home" class="on" onclick="show('home')">⌂ Home</button><button data-v="rooms" onclick="show('rooms')">◉ Rooms</button><button data-v="lib" onclick="show('lib')">♫ Library</button><button data-v="dm" onclick="show('dm')">✉ Chats</button><button data-v="you" onclick="show('you')">○ You</button></nav>
-<div class="sheet" id="sheet" onclick="if(event.target===this)this.classList.remove('on')"><div class="glass"><div class="serif" style="font-size:28px;font-weight:600">Create a room</div><input id="newRoomName" placeholder="Room name, e.g. Friday night watch party"><div class="seg" id="seg2"><div class="on" data-t="pub">Public</div><div data-t="pri">Private</div></div><button class="btn" id="createBtn">Start room</button></div></div>
-<script>
-const $=s=>document.querySelector(s);
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+.chips{display:flex;gap:8px;overflow-x:auto}.chip{padding:9px 16px;border-radius:99px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:var(--mut)}.chip.on{background:var(--gold);color:#17130a}
+.hs{display:flex;gap:12px;overflow-x:auto;margin:0 -18px;padding:0 18px 6px}.live{flex:none;width:210px;padding:12px}.th{border-radius:14px;aspect-ratio:16/9;display:grid;place-items:center;background:linear-gradient(135deg,#8b8f99,#15161a);position:relative;overflow:hidden}.th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.row{display:flex;gap:14px;padding:12px;margin-bottom:12px;align-items:center}.row .th{width:112px;flex:none;border-radius:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.tile{padding:10px}.seg{display:flex;padding:5px;border-radius:16px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);margin-bottom:16px}.seg div{flex:1;text-align:center;padding:10px;border-radius:12px;color:var(--mut)}.seg .on{background:rgba(255,255,255,.14);color:#fff}.btn{width:100%;padding:16px;border-radius:16px;border:0;background:var(--gold);color:#17130a;font-weight:600;margin-bottom:14px}.btn.ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.15)}.empty{padding:28px 20px;text-align:center;border-style:dashed}.screen{border-radius:14px;overflow:hidden;background:#000}.screen iframe{width:100%;aspect-ratio:16/9;border:0}.add{display:flex;gap:10px;padding:10px;margin-bottom:4px}.add input{flex:1;padding:13px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.3);color:#fff}.dock{position:fixed;left:14px;right:14px;bottom:14px;max-width:452px;margin:0 auto;display:flex;padding:8px;border-radius:26px}.dock button{flex:1;background:none;border:0;color:var(--mut);padding:9px 0;border-radius:18px}.dock .on{background:rgba(255,255,255,.12);color:var(--gold)}.sheet{position:fixed;inset:0;z-index:30;display:none;align-items:flex-end;background:rgba(0,0,0,.5)}.sheet.on{display:flex}.sheet .glass{width:100%;max-width:480px;margin:0 auto;padding:24px 20px;border-radius:28px 28px 0 0;background:rgba(24,22,34,.92)}.sheet input{width:100%;padding:14px 16px;margin:10px 0 14px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.3);color:#fff}#splash{position:fixed;inset:0;z-index:60;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .9s}#splash.out{opacity:0;visibility:hidden}.sp-word{font-family:'Cormorant Garamond',serif;font-size:88px;font-weight:600}.sp-btn{margin-top:40px;padding:17px 32px;border-radius:99px;border:1px solid rgba(255,255,255,.55);color:#fff;letter-spacing:.28em;font-size:12px;text-transform:uppercase;background:rgba(255,255,255,.04)}.sub{color:rgba(255,255,255,.55);font-size:14px;margin:10px 0 20px}.chrome{background:linear-gradient(180deg,#fff 0%,#b9bec8 38%,#4d525c 52%,#e8ebf0 72%,#8a8f99 100%);-webkit-background-clip:text;color:transparent}
+</style></head><body><div class="bg"></div><div id="splash" onclick="this.classList.add('out')"><div class="sp-word chrome">SYNQ</div><div class="sp-btn">✦ TAP TO ENTER »</div></div><div class="wrap"><section class="view on" id="v-home"><h1>Good evening,<br><em>there.</em></h1><p class="sub">Music, videos and live rooms, all in one place.</p><div class="glass add"><input id="sq" placeholder="Search YouTube…"><button id="sbtn">Search</button></div><div id="sres"></div><div class="chips" id="chips"></div><h2>Live rooms <small id="liveCount">0 live</small></h2><div class="hs" id="liveRooms"></div><h2>New & latest <small>Today</small></h2><div id="latest"></div><h2>For you <small>Popular now</small></h2><div class="grid" id="fyp"></div></section><section class="view" id="v-rooms"><h1>Watch & listen,<br><em>together.</em></h1><button class="btn" onclick="document.getElementById('sheet').classList.add('on')">＋ Create a room</button><div class="seg" id="seg"><div class="on" data-t="pub">Public</div><div data-t="pri">Private</div></div><div id="roomList"></div></section><section class="view" id="v-room"><p class="sub"><a href="#rooms" style="color:#e9ebf0;text-decoration:none">‹ Back to rooms</a></p><h1 id="rt">Room</h1><p class="sub" id="rs"></p><div class="glass" style="padding:12px;margin-bottom:14px"><div class="screen" id="screen"><div class="th" id="rth"><div style="text-align:center;padding:20px">Paste YouTube link below to start</div></div></div><div style="padding:12px;text-align:center"><div id="npT">Nothing playing yet</div><div id="npS" style="font-size:12px;color:rgba(255,255,255,.55)">Add a video</div></div></div><div class="glass add"><input id="lk" placeholder="Paste YouTube link…"><button id="lb">Add</button></div><div id="queue"></div><button class="btn ghost" id="inv">Invite — copy link</button></section></div><nav class="glass dock"><button data-v="home" class="on" onclick="show('home')">⌂ Home</button><button data-v="rooms" onclick="show('rooms')">◉ Rooms</button><button data-v="you" onclick="show('you')">○ You</button></nav><div class="sheet" id="sheet" onclick="if(event.target===this)this.classList.remove('on')"><div class="glass"><div style="font-size:28px">Create a room</div><input id="newRoomName" placeholder="Room name"><div class="seg" id="seg2"><div class="on" data-t="pub">Public</div><div data-t="pri">Private</div></div><button class="btn" id="createBtn">Start room</button></div></div><script>
+const $=s=>document.querySelector(s);const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function loadRooms(){try{return JSON.parse(localStorage.getItem('synq_rooms')||'[]')}catch(e){return []}}
 function saveRooms(r){localStorage.setItem('synq_rooms',JSON.stringify(r))}
 let rooms=loadRooms();let currentRoomId=null;
-const G=['#8b8f99,#15161a','#d7d9df,#2a2c33','#5c606a,#0d0e11'];
-const g=i=>`background:linear-gradient(135deg,${G[i%6]})`;
-const th=(i,t)=>`<div class="th" style="${g(i)}">▶${t?`<b style="position:absolute;left:8px;bottom:8px;font-size:10px;background:rgba(0,0,0,.5);padding:3px 8px;border-radius:99px">${t}</b>`:''}</div>`;
-$('#chips').innerHTML=['All','Music','Videos','Podcasts','Live','Chill'].map((c,i)=>`<div class="chip${i?'':' on'}">${c}</div>`).join('');
-function renderLive(){
-  const pub=rooms.filter(r=>r.type==='pub');
-  $('#liveCount').textContent=pub.length?`${pub.length} live`:'0 live';
-  if(!pub.length){$('#liveRooms').innerHTML=`<div class="glass empty"><p style="font-weight:600">No live rooms right now</p><p class="sub" style="margin:8px 0 0">Create a public room to go live.</p></div>`}
-  else{$('#liveRooms').innerHTML=pub.map((r,i)=>`<div class="glass live" onclick="openRoom('${r.id}')">${th(i,'● LIVE')}<h4>${esc(r.name)}</h4><p>${esc(r.host)} · ${r.members||1} listening</p></div>`).join('')}
-}
+const G=['#8b8f99,#15161a','#d7d9df,#2a2c33','#5c606a,#0d0e11'];const g=i=>`background:linear-gradient(135deg,${G[i%6]})`;
+const th=(i,t)=>`<div class="th" style="${g(i)}">▶${t?`<b style='position:absolute;left:8px;bottom:8px;font-size:10px;background:rgba(0,0,0,.5);padding:3px 8px;border-radius:99px'>${t}</b>`:''}</div>`;
+document.getElementById('chips').innerHTML=['All','Music','Videos','Podcasts','Live','Chill'].map((c,i)=>`<div class="chip${i?'':' on'}">${c}</div>`).join('');
+function renderLive(){const pub=rooms.filter(r=>r.type==='pub');document.getElementById('liveCount').textContent=pub.length?`${pub.length} live`:'0 live';if(!pub.length){document.getElementById('liveRooms').innerHTML=`<div class="glass empty"><p>No live rooms right now</p><p class="sub">Create a public room to go live.</p></div>`}else{document.getElementById('liveRooms').innerHTML=pub.map((r,i)=>`<div class="glass live" onclick="openRoom('${r.id}')">${th(i,'● LIVE')}<h4>${esc(r.name)}</h4><p>${esc(r.host)} · ${r.members||1} listening</p></div>`).join('')}}
 renderLive();
-function renderRooms(t){
-  const f=rooms.filter(r=>r.type===t);
-  if(!f.length){$('#roomList').innerHTML=`<div class="glass empty"><p>${t==='pub'?'No public rooms':'No private rooms yet'}</p><p class="sub">${t==='pub'?'Public rooms appear on Home.':'Private rooms need invite link.'}</p></div>`;return}
-  $('#roomList').innerHTML=f.map((r,i)=>`<div class="glass row" onclick="openRoom('${r.id}')">${th(i,r.type==='pri'?'PRIVATE':'● LIVE')}<div><h4>${esc(r.name)}</h4><p>${esc(r.host)} · ${r.members||1} in room</p></div></div>`).join('')
-}
+function renderRooms(t){const f=rooms.filter(r=>r.type===t);if(!f.length){document.getElementById('roomList').innerHTML=`<div class="glass empty"><p>${t==='pub'?'No public rooms':'No private rooms yet'}</p></div>`;return}document.getElementById('roomList').innerHTML=f.map((r,i)=>`<div class="glass row" onclick="openRoom('${r.id}')">${th(i,r.type==='pri'?'PRIVATE':'● LIVE')}<div><h4>${esc(r.name)}</h4><p>${esc(r.host)}</p></div></div>`).join('')}
 renderRooms('pub');
 document.querySelectorAll('#seg div').forEach(d=>d.onclick=()=>{document.querySelectorAll('#seg div').forEach(x=>x.classList.remove('on'));d.classList.add('on');renderRooms(d.dataset.t)});
 let newType='pub';document.querySelectorAll('#seg2 div').forEach(d=>d.onclick=()=>{document.querySelectorAll('#seg2 div').forEach(x=>x.classList.remove('on'));d.classList.add('on');newType=d.dataset.t});
-function show(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));window.scrollTo(0,0)}
-function openRoom(id){
-  const r=rooms.find(x=>x.id===id);if(!r)return;
-  currentRoomId=id;$('#rt').textContent=r.name;$('#rs').textContent=(r.type==='pri'?'Private · ':'Public · ')+r.host+` · ID ${r.id.slice(0,6)}`;
-  document.getElementById('roomChat').innerHTML=`<p><b>${esc(r.host)}</b> created the room</p><p><b>You</b> joined the room</p>`;
-  location.hash=`room?id=${id}`;show('room');
-}
-function createRoom(){
-  const nameEl=$('#newRoomName');const name=nameEl.value.trim()||`Room ${new Date().toLocaleTimeString()}`;
-  const id=Math.random().toString(36).slice(2,9);const host=$('#pn').textContent||'You';
-  const room={id,name,host,type:newType,members:1,created:Date.now()};
-  rooms.unshift(room);saveRooms(rooms);renderLive();renderRooms(document.querySelector('#seg .on')?.dataset.t||'pub');
-  document.getElementById('sheet').classList.remove('on');nameEl.value='';openRoom(id);
-}
+function show(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v))}
+function openRoom(id){const r=rooms.find(x=>x.id===id);if(!r)return;currentRoomId=id;document.getElementById('rt').textContent=r.name;document.getElementById('rs').textContent=(r.type==='pri'?'Private · ':'Public · ')+r.host;location.hash=`room?id=${id}`;show('room')}
+function createRoom(){const nameEl=document.getElementById('newRoomName');const name=nameEl.value.trim()||`Room ${new Date().toLocaleTimeString()}`;const id=Math.random().toString(36).slice(2,9);const host='You';const room={id,name,host,type:newType,members:1};rooms.unshift(room);saveRooms(rooms);renderLive();renderRooms(document.querySelector('#seg .on')?.dataset.t||'pub');document.getElementById('sheet').classList.remove('on');nameEl.value='';openRoom(id)}
 document.getElementById('createBtn').onclick=createRoom;
-const Q=[];let cur=-1;
-function play(i){if(!Q[i])return;cur=i;const s=$('#screen');const o=$('#yt');if(o)o.remove();const f=document.createElement('iframe');f.id='yt';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.src=`https://www.youtube.com/embed/${Q[i].id}?autoplay=1&rel=0`;s.appendChild(f);document.getElementById('npT').textContent=Q[i].t;document.getElementById('npS').textContent=Q[i].a}
+const Q=[];let cur=-1;function play(i){if(!Q[i])return;cur=i;const s=document.getElementById('screen');const o=document.getElementById('yt');if(o)o.remove();const f=document.createElement('iframe');f.id='yt';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.src=`https://www.youtube.com/embed/${Q[i].id}?autoplay=1&rel=0`;s.appendChild(f);document.getElementById('npT').textContent=Q[i].t}
 const yid=u=>{u=u.trim();const m=u.match(/(?:v=|youtu\.be\/|shorts\/|embed\/|live\/)([\w-]{11})/)||u.match(/^([\w-]{11})$/);return m&&m[1]};
-async function addLink(){
-  const i=$('#lk'),id=yid(i.value);if(!id)return;
-  i.value='';const it={id,t:'YouTube video',a:'Added by you'};Q.push(it);if(cur<0)play(Q.length-1);document.getElementById('queue').innerHTML=Q.map((q,i)=>`<div class="glass row" onclick="play(${i})"><div class="th" style="${g(i)}"><img src="https://i.ytimg.com/vi/${q.id}/mqdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div><div><h4>${esc(q.t)}</h4><p>${esc(q.a)}</p></div></div>`).join('');
-  try{const r=await fetch('https://www.youtube.com/oembed?format=json&url='+encodeURIComponent('https://www.youtube.com/watch?v='+id));const d=await r.json();it.t=d.title;it.a=d.author_name;document.getElementById('queue').innerHTML=Q.map((q,i)=>`<div class="glass row" onclick="play(${i})"><div class="th" style="${g(i)}"><img src="https://i.ytimg.com/vi/${q.id}/mqdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div><div><h4>${esc(q.t)}</h4><p>${esc(q.a)}</p></div></div>`).join('');if(Q[cur]===it){document.getElementById('npT').textContent=it.t}}catch(e){}
-}
-$('#lb').onclick=addLink;$('#lk').onkeydown=e=>{if(e.key==='Enter')addLink()};
-$('#inv').onclick=()=>{
-  if(!currentRoomId){alert('Create a room first!');return}
-  const link=`${location.origin}${location.pathname}#room?id=${currentRoomId}`;
-  navigator.clipboard.writeText(link).then(()=>alert('Invite link copied!\n'+link)).catch(()=>prompt('Copy this link:',link));
-};
-document.getElementById('leaveRoom').onclick=()=>{currentRoomId=null;location.hash='rooms';show('rooms')};
-document.getElementById('roomMsg').onkeydown=e=>{if(e.key==='Enter'){const v=e.target.value.trim();if(!v)return;const c=document.getElementById('roomChat');const p=document.createElement('p');p.innerHTML=`<b>You</b> ${esc(v)}`;c.appendChild(p);e.target.value=''}};
-(function(){const h=location.hash;if(h.includes('room?id=')){const id=new URLSearchParams(h.split('?')[1]).get('id');if(id)setTimeout(()=>openRoom(id),300)}})();
-const TG=window.Telegram&&window.Telegram.WebApp;if(TG){try{TG.ready();TG.expand()}catch(e){}}
-const U=TG&&TG.initDataUnsafe&&TG.initDataUnsafe.user;if(U){const full=[U.first_name,U.last_name].filter(Boolean).join(' ');document.getElementById('hi').textContent=U.first_name+'.';document.getElementById('pn').textContent=full;document.getElementById('pu').textContent=(U.username?'@'+U.username+' · ':'')+'Telegram'}
-</script>
-</body>
-</html>
+async function addLink(){const i=document.getElementById('lk'),id=yid(i.value);if(!id){if(!hasKey()){return}const q=i.value.trim();if(!q)return;try{const r=await search(q);document.getElementById('queue').innerHTML=r.map(vrow).join('')}catch(e){}return}i.value='';const it={id,t:'YouTube video'};Q.push(it);if(cur<0)play(Q.length-1);renderQueue();try{const r=await fetch('https://www.youtube.com/oembed?format=json&url='+encodeURIComponent('https://www.youtube.com/watch?v='+id));const d=await r.json();it.t=d.title;renderQueue()}catch(e){}}
+function renderQueue(){document.getElementById('queue').innerHTML=Q.map((q,i)=>`<div class="glass row" onclick="play(${i})"><div class="th" style="${g(i)}"><img src="https://i.ytimg.com/vi/${q.id}/mqdefault.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div><div><h4>${esc(q.t)}</h4></div></div>`).join('')}
+document.getElementById('lb').onclick=addLink;
+document.getElementById('inv').onclick=()=>{if(!currentRoomId){alert('Create room first');return}const link=`${location.origin}${location.pathname}#room?id=${currentRoomId}`;navigator.clipboard.writeText(link).then(()=>alert('Copied '+link)).catch(()=>prompt('Copy:',link))};
+const hasKey=()=>true;
+const V={};const dec=s=>{const t=document.createElement('textarea');t.innerHTML=s;return t.value};
+async function yt(path,params){const u=new URL('/api/yt',location.origin);u.searchParams.set('path',path);Object.entries(params).forEach(([k,v])=>u.searchParams.set(k,v));const r=await fetch(u);if(!r.ok)throw new Error(r.status);return r.json()}
+const norm=it=>{const id=it.id.videoId||it.id,s=it.snippet,o={id,t:dec(s.title),a:dec(s.channelTitle)};V[id]=o;return o};
+const search=async q=>(await yt('search',{part:'snippet',type:'video',videoEmbeddable:'true',maxResults:10,q})).items.map(norm);
+const trending=async(x={})=>(await yt('videos',{part:'snippet,status',chart:'mostPopular',regionCode:'MY',maxResults:16,...x})).items.filter(i=>i.status.embeddable).map(norm);
+const vrow=(v,i)=>`<div class="glass row" onclick="watch('${v.id}')"><div class="th" style="${g(i)}"><img src="https://i.ytimg.com/vi/${v.id}/mqdefault.jpg"></div><div><h4>${esc(v.t)}</h4><p>${esc(v.a)}</p></div><span onclick="qadd(event,'${v.id}')">＋</span></div>`;
+const vtile=(v,i)=>`<div class="glass tile" onclick="watch('${v.id}')"><div class="th" style="${g(i)}"><img src="https://i.ytimg.com/vi/${v.id}/mqdefault.jpg"></div><h4>${esc(v.t)}</h4><p>${esc(v.a)}</p></div>`;
+function watch(id){const v=V[id];if(!v)return;let i=Q.findIndex(q=>q.id===id);if(i<0){Q.push({id,t:v.t,a:v.a});i=Q.length-1}play(i);show('room')}
+function qadd(e,id){e.stopPropagation();const v=V[id];if(v&&!Q.some(q=>q.id===id)){Q.push({id,t:v.t,a:v.a});if(cur<0)play(Q.length-1);else renderQueue()}e.target.textContent='✓'}
+async function homeSearch(){const q=$('#sq').value.trim(),o=$('#sres');if(!q)return;o.innerHTML='<p class="sub">Searching…</p>';try{const r=await search(q);o.innerHTML=`<h2>Results</h2>`+r.map(vrow).join('')}catch(e){o.innerHTML='<p class="sub">Busy, try again.</p>'}}
+document.getElementById('sbtn').onclick=homeSearch;
+const FEED={};function paint(l){if(l.length>3){document.getElementById('latest').innerHTML=l.slice(0,4).map(vrow).join('');document.getElementById('fyp').innerHTML=l.slice(4,10).map(vtile).join('')}}
+async function loadFeed(n,force){const f={Music:()=>trending({videoCategoryId:10}),Videos:()=>trending({videoCategoryId:24})}[n]||(()=>trending());try{if(force||!FEED[n])FEED[n]=await f();paint(FEED[n])}catch(e){}}
+function loadTrending(){loadFeed('All',true)}
+loadTrending();
+</script></body></html>
