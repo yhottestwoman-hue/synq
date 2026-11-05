@@ -194,12 +194,6 @@ h3{font-size:15px;font-weight:600}
     <div class="setting"><div><strong>Room notifications</strong><small>Show new room activity</small></div><button class="switch" role="switch" aria-checked="true" onclick="this.setAttribute('aria-checked',this.getAttribute('aria-checked')!=='true')"></button></div>
   </div>
   <div class="glass" style="padding:18px;margin-top:14px">
-    <div class="eyebrow">YouTube discovery</div>
-    <p class="notice" style="padding:8px 0">To show genuine latest video search results, add a YouTube Data API v3 key. Without it, you can still paste video links into a room.</p>
-    <input class="input" id="youtubeKey" placeholder="YouTube Data API key (optional)" type="password">
-    <button class="btn" onclick="saveApiKey()">Save API key on this device</button>
-  </div>
-  <div class="glass" style="padding:18px;margin-top:14px">
     <div class="eyebrow">Room privacy</div>
     <div class="setting"><div><strong>Room visibility</strong><small>Choose who can find your room</small></div><select class="input" id="visibility" style="width:auto" onchange="saveVisibility()"><option value="private">Private</option><option value="public">Public</option></select></div>
     <div class="setting"><div><strong>Allow guest playback control</strong><small>Let other members play and pause</small></div><button class="switch" role="switch" aria-checked="true" onclick="this.setAttribute('aria-checked',this.getAttribute('aria-checked')!=='true')"></button></div>
@@ -210,7 +204,7 @@ h3{font-size:15px;font-weight:600}
   <div class="eyebrow">A few helpful things</div><h1>Good to <em>know.</em></h1>
   <div class="glass" style="padding:20px;margin-top:20px">
     <details class="faq-item"><summary>How do I watch videos together?</summary><p>Create or join the same room, add a YouTube video and use the shared playback controls. All members need to be online.</p></details>
-    <details class="faq-item"><summary>Do I need a YouTube API key?</summary><p>Only for searching and discovering current YouTube videos inside YSEFY. Pasting a video URL works without an API key.</p></details>
+    <details class="faq-item"><summary>Do I need to enter a YouTube API key?</summary><p>No. YSEFY uses its secure server-side YouTube connection. Your API key stays in Vercel and is never entered here.</p></details>
     <details class="faq-item"><summary>Are rooms private?</summary><p>Room visibility is a setting, but actual privacy depends on your Firebase Authentication setup and Realtime Database security rules. Do not store passwords as plain text.</p></details>
     <details class="faq-item"><summary>Why might playback not start?</summary><p>Some videos restrict embedding, require age verification or are unavailable in certain regions. Try another video if the player refuses to load.</p></details>
     <details class="faq-item"><summary>Can I use YSEFY on my phone?</summary><p>Yes. The layout is designed mobile-first and adapts to smaller screens.</p></details>
@@ -243,17 +237,15 @@ const firebaseConfig={
  messagingSenderId:"876136828891",
  appId:"1:876136828891:web:373092d421c2c70a71e1fe"
 };
-let db=null,auth=null,roomId=new URLSearchParams(location.search).get('room')||'lounge',roomRef=null,player=null,queue=[],recent=[],displayName=localStorage.getItem('ysefy_name')||'Guest',apiKey=localStorage.getItem('ysefy_youtube_key')||'',activeLibrary='queue',lastSync=0;
+let db=null,auth=null,roomId=new URLSearchParams(location.search).get('room')||'lounge',roomRef=null,player=null,queue=[],recent=[],displayName=localStorage.getItem('ysefy_name')||'Guest',activeLibrary='queue',lastSync=0;
 document.getElementById('avatar').textContent=(displayName[0]||'Y').toUpperCase();
 document.getElementById('nameDescription').textContent=displayName;
 document.getElementById('roomDescription').textContent=roomId;
-document.getElementById('youtubeKey').value=apiKey;
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.style.display='none',2400)}
 function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='library')renderLibrary();if(id==='watch'&&player&&player.playVideo){}}
 function changeName(){document.getElementById('newName').value=displayName;document.getElementById('nameModal').classList.add('open')}
 function closeName(){document.getElementById('nameModal').classList.remove('open')}
 function saveName(){const n=document.getElementById('newName').value.trim();if(!n)return toast('Enter a display name');displayName=n;localStorage.setItem('ysefy_name',n);document.getElementById('avatar').textContent=n[0].toUpperCase();document.getElementById('nameDescription').textContent=n;closeName();toast('Name updated')}
-function saveApiKey(){apiKey=document.getElementById('youtubeKey').value.trim();localStorage.setItem('ysefy_youtube_key',apiKey);toast('API key saved on this device')}
 function copyRoom(){navigator.clipboard?.writeText(location.origin+location.pathname+'?room='+roomId).then(()=>toast('Room link copied')).catch(()=>toast('Copy unavailable'))}
 function saveVisibility(){if(roomRef)roomRef.update({visibility:document.getElementById('visibility').value});toast('Room visibility updated')}
 function initFirebase(){try{if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);db=firebase.database();auth=firebase.auth();auth.signInAnonymously().catch(e=>console.warn('Anonymous auth not enabled:',e.message));roomRef=db.ref('ysefy/rooms/'+roomId);attachRoom();}catch(e){console.error(e);toast('Firebase connection unavailable')}}
@@ -279,8 +271,28 @@ function renderRecent(){const el=document.getElementById('recentList');if(!recen
 function videoRow(id,sub){return `<div class="list-row"><img class="thumb" src="https://img.youtube.com/vi/${id}/mqdefault.jpg"><div class="meta"><strong>YouTube video</strong><small>${sub}</small></div><button class="btn small" onclick="playQueued('${id}');go('watch')">Play</button></div>`}
 function renderLibrary(){const el=document.getElementById('libraryList');if(activeLibrary==='queue'){el.innerHTML=queue.length?queue.map(q=>videoRow(q.videoId,'Shared room queue')).join(''):'<div class="empty">Your queue is empty.</div>'}else{el.innerHTML=recent.length?recent.map(id=>videoRow(id,'Recently played')).join(''):'<div class="empty">Nothing played yet.</div>'}}
 function libraryTab(which,btn){activeLibrary=which;document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');renderLibrary()}
-async function searchVideos(inputId='searchInput'){const q=document.getElementById(inputId).value.trim();if(!q)return toast('Type something to search');const out=document.getElementById(inputId==='searchInput'?'searchResults':'searchResults');if(!apiKey){out.innerHTML='<div class="notice glass">Add a YouTube Data API v3 key in Settings to search current YouTube videos. You can still paste a video link in Watch.</div>';go('library');return}out.innerHTML='<div class="empty">Searching YouTube…</div>';try{const url=`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=12&order=date&q=${encodeURIComponent(q)}&key=${encodeURIComponent(apiKey)}`;const r=await fetch(url);const data=await r.json();if(!r.ok)throw new Error(data.error?.message||'YouTube search failed');out.innerHTML=(data.items||[]).map(v=>{const id=v.id.videoId;const title=v.snippet.title;const channel=v.snippet.channelTitle;return `<div class="list-row"><img class="thumb" src="${v.snippet.thumbnails.medium.url}"><div class="meta"><strong>${esc(title)}</strong><small>${esc(channel)}</small></div><button class="btn small" onclick="selectSearchVideo('${id}')">Add</button></div>`}).join('')||'<div class="empty">No videos found.</div>';if(inputId==='searchInput')go('library')}catch(e){out.innerHTML=`<div class="notice glass">${esc(e.message)}. Check your API key and YouTube Data API quota.</div>`}}
-function selectSearchVideo(id){roomRef?.child('queue').push({videoId:id,title:'YouTube video',addedBy:displayName,addedAt:Date.now()});playQueued(id);go('watch')}
+async function searchVideos(inputId='searchInput'){
+ const q=document.getElementById(inputId).value.trim();
+ if(!q)return toast('Type something to search');
+ const out=document.getElementById('searchResults');
+ out.innerHTML='<div class="empty">Searching YouTube…</div>';
+ try{
+  const params=new URLSearchParams({path:'search',q,maxResults:'12',type:'video',part:'snippet',order:'relevance'});
+  const response=await fetch(`/api/youtube?${params.toString()}`);
+  const data=await response.json();
+  if(!response.ok)throw new Error(data?.error?.message||'YouTube search failed');
+  out.innerHTML=(data.items||[]).map(v=>{
+   const id=v.id?.videoId;
+   const title=v.snippet?.title||'YouTube video';
+   const channel=v.snippet?.channelTitle||'YouTube';
+   const thumb=v.snippet?.thumbnails?.medium?.url||`https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+   if(!id)return '';
+   return `<div class="list-row"><img class="thumb" src="${escAttr(thumb)}" alt=""><div class="meta"><strong>${esc(title)}</strong><small>${esc(channel)}</small></div><button class="btn small" onclick="selectSearchVideo('${escAttr(id)}','${escAttr(title)}')">Add</button></div>`;
+  }).join('')||'<div class="empty">No videos found.</div>';
+  if(inputId==='searchInput')go('library');
+ }catch(e){out.innerHTML=`<div class="notice glass">${esc(e.message)}. Check the Vercel YouTube API connection.</div>`}
+}
+function selectSearchVideo(id,title='YouTube video'){roomRef?.child('queue').push({videoId:id,title,addedBy:displayName,addedAt:Date.now()});playQueued(id);go('watch')}
 function createRoom(type){roomId=Math.random().toString(36).slice(2,9);if(db){roomRef=db.ref('ysefy/rooms/'+roomId);roomRef.update({visibility:type,createdAt:Date.now(),createdBy:displayName});}history.replaceState({},'',location.pathname+'?room='+roomId);document.getElementById('roomDescription').textContent=roomId;document.getElementById('currentRoomLabel').textContent='Room '+roomId;attachRoom();toast(type==='private'?'Private room created':'Public room created');go('watch')}
 function joinRoom(){const id=document.getElementById('joinRoomId').value.trim();if(!id)return toast('Enter a room code');roomId=id;roomRef=db?.ref('ysefy/rooms/'+roomId);history.replaceState({},'',location.pathname+'?room='+roomId);document.getElementById('roomDescription').textContent=roomId;document.getElementById('currentRoomLabel').textContent='Room '+roomId;if(db)attachRoom();toast('Joined room '+id);go('watch')}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
