@@ -29,7 +29,6 @@ module.exports = async function handler(req, res) {
   try {
     const r = await fetch(u);
     const data = await r.json();
-    // Same query within an hour is served from cache, which saves quota.
     if (r.ok) res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400');
     return res.status(r.status).json(data);
   } catch (e) {
